@@ -49,28 +49,36 @@ Wrap each paragraph with the paragraph
 tag to tell browsers to render the gaps.</p>
 </div>
 <div id="wd-lists">
-<h4>List Tags</h4>
-<h5>Ordered List Tag</h5>
-How to make pancakes:
-<ol id="wd-pancakes">
-<li>Mix dry ingredients.</li>
-<li>Add wet ingredients.</li>
-<li>Stir to combine.</li>
-<li>Heat a skillet or griddle.</li>
-<li>Pour batter onto the skillet.</li>
-<li>Cook until bubbly on top.</li>
-<li>Flip and cook the other side.</li>
-<li>Serve and enjoy!</li>
-</ol>
+  <h4>List Tags</h4>
+  <h5>Ordered List Tag</h5>
+  How to make pancakes:
+  <ol id="wd-pancakes">
+    <li>Mix dry ingredients.</li>
+    <li>Add wet ingredients.</li>
+    <li>Stir to combine.</li>
+    <li>Heat a skillet or griddle.</li>
+    <li>Pour batter onto the skillet.</li>
+    <li>Cook until bubbly on top.</li>
+    <li>Flip and cook the other side.</li>
+    <li>Serve and enjoy!</li>
+  </ol>
+
 My favourite Recipe:
 <ol id="wd-your-favourite-recipe">
-<li>Take bread and roast it in butter.</li>
-<li>Smash the egg in a pan.</li>
-<li>Add chilli powder, pepper and salt.</li>
-<li>Cover the pan with lid and let it cook for 5 minutes.</li>
-<li>Flip the omlette.</li>
-<li>Spread the mayo and ketchup on the bread.</li>
-<li>Place the omlette in between the 2 breads.</li>
+<li>Boil water in a pot and add a pinch of salt.</li>
+<li>Add noodles and cook according to package instructions.</li>
+<li>Stir occasionally to prevent sticking.</li>
+<li>Drain the noodles and rinse with cold water.
+</li>
+<li>Heat oil in a pan and sauté garlic, onions, or veggies.
+</li>
+<li>Add cooked noodles to the pan and toss well.
+</li>
+<li>
+Season with soy sauce, salt, pepper, or sauce of your choice.
+
+</li>
+<li>Serve hot and garnish with herbs or chopped spring onions.</li>
 </ol>
 <h5>Unordered List Tag</h5>
 My Favourite Books (In no particular Order):
@@ -83,9 +91,9 @@ My Favourite Books (In no particular Order):
 </ul>
 Your favourite Books (In no particular order):
 <ul id="wd-your-books">
-<li>Bhagavadgita</li>
-<li>Ramayanam</li>
-<li>Bhagavatam</li>
+<li>Pride and Prejudice</li>
+<li>Harry Potter</li>
+<li>Love Hypothesis</li>
 </ul>
 </div>
 <div id="wd-tables">
@@ -177,7 +185,7 @@ src="https://www.staradvertiser.com/wp-content/uploads/2021/08/web1_Starship-gap
 <br />
 Loading a Local Image:
 <br />
-<img id="wd-teslabot" src="/images/teslabot.jpg" height="200px" />
+<img id="wd-teslabot" src="/images/teslabot.jpeg" height="200px" />
 </div>
 <div id="wd-forms">
 <h4>Form Elements</h4>
@@ -208,6 +216,12 @@ cupidatat non proident, sunt in culpa qui
 officia deserunt mollit anim id est laborum.">
 </textarea>
 
+{/* <h5 id="wd-buttons">Buttons</h5>
+<button type="button"
+onClick={() => alert("Life is Good!")}
+id="wd-all-good">
+Hello World!
+</button> */}
 
 <h5 id="wd-radio-buttons">Radio Buttons</h5>
 <label>Favourite movie genre: </label><br/>

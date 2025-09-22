@@ -4,22 +4,27 @@ export default function AssignmentEditor() {
       <h2>Assignment Name</h2>
       <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
 
-      <textarea id="wd-description" rows={5} cols={50}>
-        The assignment is available online Submit a link to the landing page of your Web
-        application running on Netlify. The landing page should include the following: 
-        Your full name and section Links to each of the lab assignments Link to the Kambaz 
-        application Links to all relevant source code repositories The Kanbas application 
-        should include a link to navigate back to the landing page.
+      <textarea
+        id="wd-description"
+        rows={5}
+        cols={50}
+      >
+        The assignment is available online. Submit a link to the landing page of your Web
+        application running on Netlify. The landing page should include: your full name and section, 
+        links to each lab assignment, link to the Kambaz application, and all relevant source code repositories. 
+        The Kambaz application should include a link to navigate back to the landing page.
       </textarea>
       <br />
 
       <table>
         <tbody>
+          {/* Points */}
           <tr>
             <td align="right"><label htmlFor="wd-points">Points</label></td>
             <td><input id="wd-points" type="number" defaultValue={100} /></td>
           </tr>
 
+          {/* Assignment Group */}
           <tr>
             <td align="right"><label htmlFor="wd-group">Assignment Group</label></td>
             <td>
@@ -32,10 +37,11 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
+          {/* Display Grade As */}
           <tr>
-            <td align="right"><label htmlFor="wd-display-grade">Display Grade as</label></td>
+            <td align="right"><label htmlFor="wd-display-grade-as">Display Grade as</label></td>
             <td>
-              <select id="wd-display-grade" defaultValue="Percentage">
+              <select id="wd-display-grade-as" defaultValue="Percentage">
                 <option value="Percentage">Percentage</option>
                 <option value="Points">Points</option>
                 <option value="Complete/Incomplete">Complete/Incomplete</option>
@@ -43,8 +49,9 @@ export default function AssignmentEditor() {
             </td>
           </tr>
 
+          {/* Submission Type */}
           <tr>
-            <td align="right"><label htmlFor="wd-submission-type">Submission Type</label></td>
+            <td align="right" valign="top"><label htmlFor="wd-submission-type">Submission Type</label></td>
             <td>
               <select id="wd-submission-type" defaultValue="Online">
                 <option value="Online">Online</option>
@@ -52,14 +59,25 @@ export default function AssignmentEditor() {
                 <option value="External Tool">External Tool</option>
               </select>
               <br />
-              <label><input type="checkbox" /> Text Entry</label><br />
-              <label><input type="checkbox" /> Website URL</label><br />
-              <label><input type="checkbox" /> Media Recordings</label><br />
-              <label><input type="checkbox" /> Student Annotation</label><br />
-              <label><input type="checkbox" /> File Uploads</label>
+              <label>
+                <input type="checkbox" id="wd-text-entry" /> Text Entry
+              </label><br />
+              <label>
+                <input type="checkbox" id="wd-website-url" /> Website URL
+              </label><br />
+              <label>
+                <input type="checkbox" id="wd-media-recordings" /> Media Recordings
+              </label><br />
+              <label>
+                <input type="checkbox" id="wd-student-annotation" /> Student Annotation
+              </label><br />
+              <label>
+                <input type="checkbox" id="wd-file-upload" /> File Uploads
+              </label>
             </td>
           </tr>
 
+          {/* Assign & Dates */}
           <tr>
             <td align="right" valign="top"><label>Assign</label></td>
             <td>
