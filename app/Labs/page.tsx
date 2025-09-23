@@ -36,7 +36,7 @@ export default function Labs() {
         <Link href="/" id="wd-kambaz-link">
         Kambaz
         </Link>
-       </li>
+     </li>
      </ul>
    </div>
 );}
