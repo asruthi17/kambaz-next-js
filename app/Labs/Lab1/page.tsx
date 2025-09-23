@@ -295,8 +295,6 @@ id="wd-text-fields-dob"></input><br/>
 Please
 <a href="https://www.lipsum.com" id="wd-lipsum"> Click Here </a>
 to get dummy text<br/>
-<a href="https:github.com/RishikaVootkur" id="wd-github"> Click Here </a>
-to view my github repository<br/>
 </div>
 </div>
 );
