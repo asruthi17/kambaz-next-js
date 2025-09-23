@@ -2,7 +2,23 @@ import Link from "next/link";
 export default function Labs() {
  return (
    <div id="wd-labs">
-     <h1>Labs - Sruthi Annavarapu - CS5610 FA25</h1>
+    <div className="mb-6">
+        <h2>Student Info</h2>
+        <p><strong>Name:</strong>Sruthi Annavarapu</p>
+        <p><strong>Section:</strong> CS5610 18616</p>
+        <p>
+          <strong>GitHub:</strong>{" "}
+          <a
+            href="https://github.com/asruthi17"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+           https://github.com/asruthi17
+          </a>
+        </p>
+      </div>
+
+     <h1>Labs</h1>
      <ul>
        <li>
          <Link href="/Labs/Lab1" id="wd-lab1-link">
@@ -19,6 +35,11 @@ export default function Labs() {
        <li>
         <Link href="/" id="wd-kambaz-link">
         Kambaz
+        </Link>
+       </li>
+      <li>
+        <Link href="https://github.com/asruthi17" id="wd-github-link">
+        Click here for my Github.
         </Link>
        </li>
      </ul>
