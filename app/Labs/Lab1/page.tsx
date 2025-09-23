@@ -216,12 +216,12 @@ cupidatat non proident, sunt in culpa qui
 officia deserunt mollit anim id est laborum.">
 </textarea>
 
-{/* <h5 id="wd-buttons">Buttons</h5>
+<h5 id="wd-buttons">Buttons</h5>
 <button type="button"
-onClick={() => alert("Life is Good!")}
-id="wd-all-good">
-Hello World!
-</button> */}
+        onClick={() => alert("Life is Good!")}
+        id="wd-all-good">
+  Hello World!
+</button>
 
 <h5 id="wd-radio-buttons">Radio Buttons</h5>
 <label>Favourite movie genre: </label><br/>
