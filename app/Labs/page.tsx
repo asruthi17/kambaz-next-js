@@ -37,11 +37,6 @@ export default function Labs() {
         Kambaz
         </Link>
        </li>
-      <li>
-        <Link href="https://github.com/asruthi17" id="wd-github-link">
-        Click here for my Github.
-        </Link>
-       </li>
      </ul>
    </div>
 );}
