@@ -4,7 +4,7 @@ export default function CourseStatus() {
             <h2>Course Status</h2>
             <button>Unpublish</button>
             <button>Publish</button>
-
+            <br />
             <button>View Course Notifications</button>
             <button>Import Existinng Content</button>
             <button>Import from Commons</button>
