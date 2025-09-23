@@ -13,7 +13,7 @@ export default function Labs() {
             target="_blank"
             rel="noopener noreferrer"
           >
-           https://github.com/asruthi17
+            https://github.com/asruthi17
           </a>
         </p>
       </div>
@@ -36,7 +36,7 @@ export default function Labs() {
         <Link href="/" id="wd-kambaz-link">
         Kambaz
         </Link>
-     </li>
+       </li>
      </ul>
    </div>
 );}
