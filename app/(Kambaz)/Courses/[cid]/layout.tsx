@@ -3,7 +3,7 @@
 import { ReactNode, useState, use } from "react";
 import { usePathname } from "next/navigation";
 import CourseNavigation from "./Navigation";
-import { FaAlignJustify, FaTimes } from "react-icons/fa";
+import { FaAlignJustify, FaTimes, FaBars } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
 
 export default function CoursesLayout(
@@ -17,7 +17,6 @@ export default function CoursesLayout(
   const pageName = segments[segments.length - 1] || 'Home';
   const displayName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
 
-  // Map assignment IDs to display names
   const getAssignmentName = (id: string) => {
     const assignmentMap: { [key: string]: string } = {
       '123': 'A1',
@@ -27,7 +26,6 @@ export default function CoursesLayout(
     return assignmentMap[id] || id;
   };
 
-  // Build breadcrumb
   const getBreadcrumb = () => {
     if (pathname.includes('/Assignments/')) {
       const assignmentId = segments[segments.length - 1];
@@ -60,9 +58,17 @@ export default function CoursesLayout(
         <hr />
       </div>
 
-      {/* Mobile Black Header */}
-      <div className="bg-dark text-white p-3 d-flex align-items-center justify-content-between d-lg-none">
-        <span>Course {cid} - {displayName}</span>
+      {/* Mobile Black Header - Full width, positioned absolutely */}
+      <div className="bg-dark text-white p-3 d-flex align-items-center d-lg-none position-fixed w-100 top-0 start-0" style={{ zIndex: 100 }}>
+        <button 
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent('toggleKambazNav'));
+          }}
+          className="btn text-white p-0 me-3"
+        >
+          <FaBars size={20} />
+        </button>
+        <span className="flex-grow-1">{getBreadcrumb()}</span>
         <button 
           onClick={() => setShowCourseNav(!showCourseNav)} 
           className="btn text-white p-0"
@@ -71,19 +77,19 @@ export default function CoursesLayout(
         </button>
       </div>
 
+      {/* Add padding top on mobile to account for fixed header */}
+      <div className="d-lg-none" style={{ paddingTop: '60px' }}></div>
+
       <div className="d-flex position-relative">
-        {/* Desktop Course Navigation */}
         <div className="d-none d-lg-block bg-white" style={{ width: '200px' }}>
           <CourseNavigation />
         </div>
 
-        {/* Main Content */}
         <div className="flex-fill">
           {children}
         </div>
       </div>
 
-      {/* Mobile Course Navigation - Full Screen from Right */}
       {showCourseNav && (
         <>
           <div 
