@@ -9,7 +9,7 @@ import { Button } from "react-bootstrap";
 export default function Assignments() {
   return (
     <div id="wd-assignments">
-      <div className="d-flex justify-content-between align-items-center mb-3">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <div className="position-relative" style={{ width: '300px' }}>
           <BsSearch className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" />
           <input 
@@ -54,7 +54,7 @@ export default function Assignments() {
                   A1 - ENV + HTML
                 </Link>
                 <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span><strong>Not available until</strong>  May 6 at 12:00am</span> | 
+                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 6 at 12:00am</span> | 
                   <br />
                   <span><strong>Due</strong> May 13 at 11:59pm</span> | <span>100 pts</span>
                 </div>
@@ -75,7 +75,7 @@ export default function Assignments() {
                   A2 - CSS + BOOTSTRAP
                 </Link>
                 <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span><strong>Not available until</strong>  May 13 at 12:00am</span> | 
+                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 13 at 12:00am</span> | 
                   <br />
                   <span><strong>Due</strong> May 20 at 11:59pm</span> | <span>100 pts</span>
                 </div>
@@ -96,7 +96,7 @@ export default function Assignments() {
                   A3 - JAVASCRIPT + REACT
                 </Link>
                 <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span><strong>Not available until</strong> May 20 at 12:00am</span> | 
+                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 20 at 12:00am</span> | 
                   <br />
                   <span><strong>Due</strong> May 27 at 11:59pm</span> | <span>100 pts</span>
                 </div>
