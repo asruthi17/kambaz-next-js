@@ -1,6 +1,4 @@
-// app/(Kambaz)/Account/Navigation.tsx
 import Link from "next/link";
-import { FaUserCircle } from "react-icons/fa";
 
 export default function AccountNavigation() {
   return (

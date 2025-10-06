@@ -1,4 +1,3 @@
-// app/(Kambaz)/Courses/[cid]/layout.tsx
 'use client';
 import { ReactNode, useState, use } from "react";
 import { usePathname } from "next/navigation";
@@ -39,6 +38,8 @@ export default function CoursesLayout(
       return `Course ${cid} > Home`;
     } else if (pathname.includes('/Piazza')) {
       return `Course ${cid} > Piazza`;
+    } else if (pathname.includes('/Zoom')) {
+      return `Course ${cid} > Zoom`;
     } else if (pathname.includes('/Quizzes')) {
       return `Course ${cid} > Quizzes`;
     } else if (pathname.includes('/People')) {
@@ -49,7 +50,6 @@ export default function CoursesLayout(
 
   return (
     <div id="wd-courses">
-      {/* Desktop Course Title with Breadcrumb */}
       <div className="d-none d-lg-block">
         <h2 className="text-danger">
           <FaAlignJustify className="me-4 fs-4 mb-1" />
@@ -58,7 +58,6 @@ export default function CoursesLayout(
         <hr />
       </div>
 
-      {/* Mobile Black Header - Full width, positioned absolutely */}
       <div className="bg-dark text-white p-3 d-flex align-items-center d-lg-none position-fixed w-100 top-0 start-0" style={{ zIndex: 100 }}>
         <button 
           onClick={() => {
@@ -77,7 +76,6 @@ export default function CoursesLayout(
         </button>
       </div>
 
-      {/* Add padding top on mobile to account for fixed header */}
       <div className="d-lg-none" style={{ paddingTop: '60px' }}></div>
 
       <div className="d-flex position-relative">

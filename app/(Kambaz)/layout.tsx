@@ -1,4 +1,3 @@
-// app/(Kambaz)/layout.tsx
 'use client';
 import { ReactNode, useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -18,8 +17,7 @@ export default function KambazLayout({ children }: Readonly<{ children: ReactNod
   }, []);
 
   return (
-    <div id="wd-kambaz">
-      {/* Show hamburger on non-course pages only */}
+    <div id="wd-kambaz" style={{ zoom: '0.85', minHeight: '100vh' }}>
       {!isCoursePage && (
         <div className="d-md-none bg-dark text-white p-3">
           <button onClick={() => setShowKambazNav(!showKambazNav)} className="btn text-white p-0">
@@ -28,8 +26,8 @@ export default function KambazLayout({ children }: Readonly<{ children: ReactNod
         </div>
       )}
 
-      <div className="d-flex">
-        <div className="d-none d-md-block position-fixed" style={{ width: '110px', height: '100vh', zIndex: 2, backgroundColor: 'black' }}>
+      <div className="d-flex" style={{ minHeight: '100vh' }}>
+        <div className="d-none d-md-block position-fixed" style={{ width: '110px', minHeight: '100vh', height: '100%', zIndex: 2, backgroundColor: 'black', top: 0, left: 0, bottom: 0 }}>
           <KambazNavigation />
         </div>
         <div className="wd-main-content-offset p-3 flex-fill">

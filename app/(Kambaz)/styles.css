@@ -38,3 +38,27 @@ body * {
 .dropdown-menu {
   background-color: white !important;
 }
+
+.btn-secondary {
+  --bs-btn-color: #000 !important;
+  --bs-btn-bg: #e0e0e0 !important;
+  --bs-btn-border-color: #e0e0e0 !important;
+  --bs-btn-hover-color: #000 !important;
+  --bs-btn-hover-bg: #d0d0d0 !important;
+}
+
+.bg-secondary {
+  --bs-secondary-rgb: 230, 230, 230;
+  background-color: #e6e6e6 !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#wd-kambaz {
+  min-height: 100vh;
+}

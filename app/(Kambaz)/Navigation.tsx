@@ -1,12 +1,9 @@
-// app/(Kambaz)/Navigation.tsx
 "use client";
 
 import { AiOutlineDashboard } from "react-icons/ai";
 import { IoCalendarOutline } from "react-icons/io5";
 import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser} from "react-icons/fa6";
-import { IoMdHelpCircleOutline } from "react-icons/io";
-import { MdHistory } from "react-icons/md";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -24,7 +21,7 @@ export default function KambazNavigation({ isMobile = false, onClose }: { isMobi
     { href: "/Labs", label: "Labs", icon: LiaCogSolid, id: "wd-labs-link" },
   ];
 
-  // Mobile overlay version
+
   if (isMobile) {
     return (
       <div className="bg-white h-100 p-4">
@@ -61,8 +58,7 @@ export default function KambazNavigation({ isMobile = false, onClose }: { isMobi
     );
   }
 
-  // Desktop sidebar version
- // Desktop sidebar version
+
 return (
   <ListGroup 
     className="rounded-0 bg-black" 
@@ -71,7 +67,7 @@ return (
   >
     <ListGroupItem className="bg-black border-0 text-center py-3" as="a"
       target="_blank" href="https://www.northeastern.edu/" id="wd-neu-link">
-      <img src="/images/NEU.svg" width="75px" alt="Northeastern University" />
+      <img src="/images/neulogo.png" width="75px" alt="Northeastern University" />
     </ListGroupItem>
     
     {links.map((link) => {

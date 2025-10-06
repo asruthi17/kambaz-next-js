@@ -1,4 +1,3 @@
-// app/(Kambaz)/Courses/[cid]/Modules/ModulesControls.tsx
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa6";
 import { BsSlashCircle } from "react-icons/bs";

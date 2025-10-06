@@ -1,6 +1,5 @@
-// app/(Kambaz)/Account/Signup/page.tsx
 import Link from "next/link";
-import { Form, Button } from "react-bootstrap";
+import { Form} from "react-bootstrap";
 
 export default function Signup() {
   return (
