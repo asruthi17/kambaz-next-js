@@ -13,7 +13,7 @@ export default function ModulesControls() {
       </Button>
       
       <Dropdown className="float-end me-2">
-        <DropdownToggle variant="secondary" size="lg" id="wd-publish-all-btn">
+        <DropdownToggle variant="secondary" size="lg" id="wd-publish-all-btn" className="text-dark">
           <GreenCheckmark /> Publish All
         </DropdownToggle>
         <DropdownMenu>
@@ -27,19 +27,19 @@ export default function ModulesControls() {
             <GreenCheckmark /> Publish modules only
           </DropdownItem>
           <DropdownItem id="wd-unpublish-all-modules-and-items">
-            <BsSlashCircle className="me-1" /> Unpublish all modules and items
+            <BsSlashCircle className="me-1 text-muted" /> Unpublish all modules and items
           </DropdownItem>
           <DropdownItem id="wd-unpublish-modules-only">
-            <BsSlashCircle className="me-1" /> Unpublish modules only
+            <BsSlashCircle className="me-1 text-muted" /> Unpublish modules only
           </DropdownItem>
         </DropdownMenu>
       </Dropdown>
 
-      <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-view-progress">
+      <Button variant="secondary" size="lg" className="me-1 float-end text-dark" id="wd-view-progress">
         View Progress
       </Button>
 
-      <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-collapse-all">
+      <Button variant="secondary" size="lg" className="me-1 float-end text-dark" id="wd-collapse-all">
         Collapse All
       </Button>
     </div>

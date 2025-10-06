@@ -2,13 +2,13 @@
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
-import LessonControlButtons from "./LessonControlButtons"
+import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 
 export default function Modules() {
   return (
     <div>
-      <ModulesControls /><br /><br /><br />
+      <ModulesControls /><br /><br /><br /><br />
       <ListGroup className="rounded-0" id="wd-modules">
         {/* Week 1 */}
         <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">

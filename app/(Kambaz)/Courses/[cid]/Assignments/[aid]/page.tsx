@@ -4,9 +4,6 @@ import { Form, Button } from "react-bootstrap";
 export default function AssignmentEditor() {
   return (
     <div>
-    <div className="mb-3 text-muted">
-  Course 1234 &gt; Assignments &gt; A1
-</div>
     <div id="wd-assignments-editor" className="p-3">
       <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
       <Form.Control id="wd-name" defaultValue="A1 - ENV + HTML" className="mb-3" />

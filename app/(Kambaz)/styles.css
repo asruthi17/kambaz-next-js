@@ -19,3 +19,22 @@ body * {
   background-color: white;
   border-left: 3px solid black !important;
 }
+
+.wd-lesson {
+  border-left: 3px solid green !important;
+}
+
+.list-group-item {
+  --bs-list-group-border-color: gray;
+}
+
+
+@media (max-width: 991px) {
+  .d-lg-none {
+    display: block !important;
+  }
+}
+
+.dropdown-menu {
+  background-color: white !important;
+}

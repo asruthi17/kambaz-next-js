@@ -1,7 +1,7 @@
 // app/(Kambaz)/Courses/[cid]/Assignments/page.tsx
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa6";
-import { BsGripVertical, BsThreeDotsVertical } from "react-icons/bs";
+import { BsGripVertical, BsThreeDotsVertical, BsSearch } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdEditDocument } from "react-icons/md";
@@ -11,14 +11,16 @@ export default function Assignments() {
   return (
     <div id="wd-assignments">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <input 
-          placeholder="Search for Assignments"
-          id="wd-search-assignment" 
-          className="form-control w-50"
-          style={{ marginRight: "10px" }}
-        />
+        <div className="position-relative" style={{ width: '50%' }}>
+          <BsSearch className="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted" />
+          <input 
+            placeholder="Search for Assignments"
+            id="wd-search-assignment" 
+            className="form-control ps-5"
+          />
+        </div>
         <div>
-          <Button variant="secondary" size="lg" className="me-2" id="wd-add-assignment-group">
+          <Button variant="secondary" size="lg" className="me-2 text-dark" id="wd-add-assignment-group">
             <FaPlus className="me-1" /> Group
           </Button>
           <Button variant="danger" size="lg" id="wd-add-assignment">
