@@ -1,41 +1,30 @@
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import { useParams } from "next/navigation";
+import Link from "next/link";
+import { assignments } from "../../../../Database";
 
 export default function AssignmentEditor() {
-  const params = useParams();
-  const assignmentId = params.aid as string;
+  const { cid, aid } = useParams();
+  const assignment = assignments.find((assignment: any) => assignment._id === aid);
 
+  // Fallback if assignment not found
+  if (!assignment) {
+    return (
+      <div className="container mt-4">
+        <h3>Assignment not found</h3>
+        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-secondary">
+          Back to Assignments
+        </Link>
+      </div>
+    );
+  }
 
-  const assignmentDetails: Record<string, { name: string; dueDate: string; availableFrom: string; availableUntil: string }> = {
-    "123": {
-      name: "A1 - ENV + HTML",
-      dueDate: "2024-05-13T23:59",
-      availableFrom: "2024-05-06T00:00",
-      availableUntil: "2024-05-20T23:59"
-    },
-    "234": {
-      name: "A2 - CSS + BOOTSTRAP",
-      dueDate: "2024-05-20T23:59",
-      availableFrom: "2024-05-13T00:00",
-      availableUntil: "2024-05-27T23:59"
-    },
-    "345": {
-      name: "A3 - JAVASCRIPT + REACT",
-      dueDate: "2024-05-27T23:59",
-      availableFrom: "2024-05-20T00:00",
-      availableUntil: "2024-06-03T23:59"
-    }
-  };
-
-  const assignment = assignmentDetails[assignmentId] || {
-    name: "A1 - ENV + HTML",
-    dueDate: "2024-05-13T23:59",
-    availableFrom: "2024-05-06T00:00",
-    availableUntil: "2024-05-20T23:59"
-  };
+  // Extract display ID (A101 -> A1)
+  const idNumber = assignment._id.match(/\d+/)?.[0];
+  const displayId = `A${idNumber?.slice(-1)}`;
 
   return (
     <div style={{ zoom: '0.85' }}>
@@ -43,7 +32,11 @@ export default function AssignmentEditor() {
         <div className="row mb-3">
           <div className="col-12">
             <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-            <Form.Control id="wd-name" defaultValue={assignment.name} className="border-dark" />
+            <Form.Control 
+              id="wd-name" 
+              defaultValue={`${displayId} - ${assignment.title}`} 
+              className="border-dark" 
+            />
           </div>
         </div>
 
@@ -51,7 +44,7 @@ export default function AssignmentEditor() {
           <div className="col-12">
             <div className="border border-dark p-3">
               <p className="mb-2">
-                The assignment is <span style={{ color: 'red' }}>available online</span>
+                {assignment.description || "The assignment is available online"}
               </p>
               <p className="mb-2">
                 Submit a link to the landing page of your Web application running on Netlify.
@@ -60,11 +53,11 @@ export default function AssignmentEditor() {
               <ul>
                 <li>Your full name and section</li>
                 <li>Links to each of the lab assignments</li>
-                <li>Link to the Kanbas application</li>
+                <li>Link to the Kambas application</li>
                 <li>Links to all relevant source code repositories</li>
               </ul>
               <p className="mb-0">
-                The Kanbas application should include a link to navigate back to the landing page.
+                The Kambas application should include a link to navigate back to the landing page.
               </p>
             </div>
           </div>
@@ -77,7 +70,12 @@ export default function AssignmentEditor() {
                 Points
               </Form.Label>
               <div className="col-md-9">
-                <Form.Control id="wd-points" type="number" defaultValue={100} className="border-dark" />
+                <Form.Control 
+                  id="wd-points" 
+                  type="number" 
+                  defaultValue={assignment.points} 
+                  className="border-dark" 
+                />
               </div>
             </div>
           </div>
@@ -188,7 +186,7 @@ export default function AssignmentEditor() {
                       <Form.Label htmlFor="wd-due-date" className="fw-bold">Due</Form.Label>
                       <Form.Control 
                         id="wd-due-date" 
-                        type="datetime-local" 
+                        type="date" 
                         defaultValue={assignment.dueDate} 
                         className="border-dark"
                         style={{ borderColor: 'black' }}
@@ -203,8 +201,8 @@ export default function AssignmentEditor() {
                       </Form.Label>
                       <Form.Control 
                         id="wd-available-from" 
-                        type="datetime-local" 
-                        defaultValue={assignment.availableFrom}
+                        type="date" 
+                        defaultValue={assignment.availableDate}
                         className="border-dark" 
                       />
                     </div>
@@ -214,8 +212,8 @@ export default function AssignmentEditor() {
                       </Form.Label>
                       <Form.Control 
                         id="wd-available-until" 
-                        type="datetime-local" 
-                        defaultValue={assignment.availableUntil}
+                        type="date" 
+                        defaultValue={assignment.dueDate}
                         className="border-dark" 
                       />
                     </div>
@@ -229,8 +227,12 @@ export default function AssignmentEditor() {
         <hr />
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
-            <Button variant="light" className="me-2 border">Cancel</Button>
-            <Button variant="danger">Save</Button>
+            <Link href={`/Courses/${cid}/Assignments`}>
+              <Button variant="light" className="me-2 border">Cancel</Button>
+            </Link>
+            <Link href={`/Courses/${cid}/Assignments`}>
+              <Button variant="danger">Save</Button>
+            </Link>
           </div>
         </div>
       </div>

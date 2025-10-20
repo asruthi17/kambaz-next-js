@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { FaPlus } from "react-icons/fa6";
 import { BsGripVertical, BsThreeDotsVertical, BsSearch } from "react-icons/bs";
@@ -5,8 +8,12 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { FaCheckCircle } from "react-icons/fa";
 import { MdEditDocument } from "react-icons/md";
 import { Button } from "react-bootstrap";
+import * as db from "../../../Database";
 
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments.filter((assignment: any) => assignment.course === cid);
+
   return (
     <div id="wd-assignments">
       <div className="d-flex justify-content-between align-items-center mb-4">
@@ -45,68 +52,32 @@ export default function Assignments() {
         </div>
 
         <ul id="wd-assignment-list" style={{ listStyle: "none", padding: 0, margin: 0 }}>
-          <li className="wd-assignment-list-item p-3 bg-white" style={{ borderLeft: "4px solid green" }}>
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="me-2 fs-3 text-muted" />
-              <MdEditDocument className="me-3 fs-3 text-success" />
-              <div className="flex-grow-1">
-                <Link href="/Courses/1234/Assignments/123" className="wd-assignment-link text-decoration-none text-dark" style={{ fontSize: "18px", fontWeight: "bold" }}>
-                  A1 - ENV + HTML
-                </Link>
-                <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 6 at 12:00am</span> | 
-                  <br />
-                  <span><strong>Due</strong> May 13 at 11:59pm</span> | <span>100 pts</span>
+          {assignments.map((assignment: any) => (
+            <li key={assignment._id} className="wd-assignment-list-item p-3 bg-white" style={{ borderLeft: "4px solid green" }}>
+              <div className="d-flex align-items-center">
+                <BsGripVertical className="me-2 fs-3 text-muted" />
+                <MdEditDocument className="me-3 fs-3 text-success" />
+                <div className="flex-grow-1">
+                  <Link 
+                    href={`/Courses/${cid}/Assignments/${assignment._id}`}
+                    className="wd-assignment-link text-decoration-none text-dark" 
+                    style={{ fontSize: "18px", fontWeight: "bold" }}
+                  >
+                    {assignment.title}
+                  </Link>
+                  <div className="text-muted" style={{ fontSize: "12px" }}>
+                    <span className="text-danger">Multiple Modules</span> | <span>Not available until {assignment.availableDate}</span> | 
+                    <br />
+                    <span><strong>Due</strong> {assignment.dueDate}</span> | <span>{assignment.points} pts</span>
+                  </div>
+                </div>
+                <div className="d-flex align-items-center">
+                  <FaCheckCircle className="text-success me-3 fs-5" />
+                  <BsThreeDotsVertical className="fs-5" />
                 </div>
               </div>
-              <div className="d-flex align-items-center">
-                <FaCheckCircle className="text-success me-3 fs-5" />
-                <BsThreeDotsVertical className="fs-5" />
-              </div>
-            </div>
-          </li>
-
-          <li className="wd-assignment-list-item p-3 bg-white" style={{ borderLeft: "4px solid green" }}>
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="me-2 fs-3 text-muted" />
-              <MdEditDocument className="me-3 fs-3 text-success" />
-              <div className="flex-grow-1">
-                <Link href="/Courses/1234/Assignments/234" className="wd-assignment-link text-decoration-none text-dark" style={{ fontSize: "18px", fontWeight: "bold" }}>
-                  A2 - CSS + BOOTSTRAP
-                </Link>
-                <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 13 at 12:00am</span> | 
-                  <br />
-                  <span><strong>Due</strong> May 20 at 11:59pm</span> | <span>100 pts</span>
-                </div>
-              </div>
-              <div className="d-flex align-items-center">
-                <FaCheckCircle className="text-success me-3 fs-5" />
-                <BsThreeDotsVertical className="fs-5" />
-              </div>
-            </div>
-          </li>
-
-          <li className="wd-assignment-list-item p-3 bg-white" style={{ borderLeft: "4px solid green" }}>
-            <div className="d-flex align-items-center">
-              <BsGripVertical className="me-2 fs-3 text-muted" />
-              <MdEditDocument className="me-3 fs-3 text-success" />
-              <div className="flex-grow-1">
-                <Link href="/Courses/1234/Assignments/345" className="wd-assignment-link text-decoration-none text-dark" style={{ fontSize: "18px", fontWeight: "bold" }}>
-                  A3 - JAVASCRIPT + REACT
-                </Link>
-                <div className="text-muted" style={{ fontSize: "12px" }}>
-                  <span className="text-danger">Multiple Modules</span> | <span>Not available until May 20 at 12:00am</span> | 
-                  <br />
-                  <span><strong>Due</strong> May 27 at 11:59pm</span> | <span>100 pts</span>
-                </div>
-              </div>
-              <div className="d-flex align-items-center">
-                <FaCheckCircle className="text-success me-3 fs-5" />
-                <BsThreeDotsVertical className="fs-5" />
-              </div>
-            </div>
-          </li>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

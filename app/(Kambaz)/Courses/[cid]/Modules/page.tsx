@@ -1,165 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+import { useParams } from "next/navigation";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
+import * as db from "../../../Database";
 
 export default function Modules() {
+  const { cid } = useParams();
+  const modules = db.modules;
+
   return (
     <div>
       <ModulesControls /><br /><br /><br /><br />
       <ListGroup className="rounded-0" id="wd-modules">
-        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">
-            <BsGripVertical className="me-2 fs-3" /> 
-            Week 1, Lecture 1 - Course Introduction, Syllabus, Agenda 
-            <ModuleControlButtons />
-          </div>
-          <ListGroup className="wd-lessons rounded-0">
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              LEARNING OBJECTIVES 
-              <LessonControlButtons />
+        {modules
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .filter((module: any) => module.course === cid)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((module: any) => (
+            <ListGroupItem key={module._id} className="wd-module p-0 mb-5 fs-5 border-gray">
+              <div className="wd-title p-3 ps-2 bg-secondary">
+                <BsGripVertical className="me-2 fs-3" /> 
+                {module.name}
+                <ModuleControlButtons />
+              </div>
+              {module.lessons && (
+                <ListGroup className="wd-lessons rounded-0">
+                  {module.lessons.map((lesson: any) => (
+                    <ListGroupItem key={lesson._id} className="wd-lesson p-3 ps-1">
+                      <BsGripVertical className="me-2 fs-3" /> 
+                      {lesson.name}
+                      <LessonControlButtons />
+                    </ListGroupItem>
+                  ))}
+                </ListGroup>
+              )}
             </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Introduction to the course 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Learn what is Web Development 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              READING 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Full Stack Developer - Chapter 1 - Introduction 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Full Stack Developer - Chapter 2 - Creating User Interfaces With HTML 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              SLIDES 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Introduction to Web Development 
-              <LessonControlButtons />
-            </ListGroupItem>
-          </ListGroup>
-        </ListGroupItem>
-
-
-        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">
-            <BsGripVertical className="me-2 fs-3" /> 
-            Week 2 - CSS Fundamentals
-            <ModuleControlButtons />
-          </div>
-          <ListGroup className="wd-lessons rounded-0">
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              LEARNING OBJECTIVES 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Learn CSS Selectors and Properties
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Understand Box Model and Layout
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              READING 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              CSS Basics - Chapter 3
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Bootstrap Framework Guide
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              SLIDES 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              CSS Styling Techniques
-              <LessonControlButtons />
-            </ListGroupItem>
-          </ListGroup>
-        </ListGroupItem>
-
-
-        <ListGroupItem className="wd-module p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">
-            <BsGripVertical className="me-2 fs-3" /> 
-            Week 3 - JavaScript and React
-            <ModuleControlButtons />
-          </div>
-          <ListGroup className="wd-lessons rounded-0">
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              LEARNING OBJECTIVES 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Introduction to JavaScript 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Variables and Data Types 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              READING 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              JavaScript Fundamentals 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              Functions and Loops 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" /> 
-              SLIDES 
-              <LessonControlButtons />
-            </ListGroupItem>
-            <ListGroupItem className="wd-lesson p-3 ps-5">
-              <BsGripVertical className="me-2 fs-3" /> 
-              DOM Manipulation 
-              <LessonControlButtons />
-            </ListGroupItem>
-          </ListGroup>
-        </ListGroupItem>
+          ))}
       </ListGroup>
     </div>
   );

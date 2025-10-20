@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import CourseNavigation from "./Navigation";
 import { FaAlignJustify, FaTimes, FaBars } from "react-icons/fa";
 import { IoMdArrowDropdown } from "react-icons/io";
+import * as db from "../../Database";
 
 export default function CoursesLayout(
   { children, params }: Readonly<{ children: ReactNode; params: Promise<{ cid: string }> }>
@@ -11,6 +12,9 @@ export default function CoursesLayout(
   const [showCourseNav, setShowCourseNav] = useState(false);
   const pathname = usePathname();
   const { cid } = use(params);
+  
+  // Find the course from database
+  const course = db.courses.find((course) => course._id === cid);
   
   const segments = pathname.split('/');
   const pageName = segments[segments.length - 1] || 'Home';
@@ -26,26 +30,30 @@ export default function CoursesLayout(
   };
 
   const getBreadcrumb = () => {
+    const courseName = course?.name || `Course ${cid}`;
+    
     if (pathname.includes('/Assignments/')) {
       const assignmentId = segments[segments.length - 1];
       const displayId = getAssignmentName(assignmentId);
-      return `Course ${cid} > Assignments > ${displayId}`;
+      return `${courseName} > Assignments > ${displayId}`;
     } else if (pathname.includes('/Assignments')) {
-      return `Course ${cid} > Assignments`;
+      return `${courseName} > Assignments`;
     } else if (pathname.includes('/Modules')) {
-      return `Course ${cid} > Modules`;
+      return `${courseName} > Modules`;
     } else if (pathname.includes('/Home')) {
-      return `Course ${cid} > Home`;
+      return `${courseName} > Home`;
     } else if (pathname.includes('/Piazza')) {
-      return `Course ${cid} > Piazza`;
+      return `${courseName} > Piazza`;
     } else if (pathname.includes('/Zoom')) {
-      return `Course ${cid} > Zoom`;
+      return `${courseName} > Zoom`;
     } else if (pathname.includes('/Quizzes')) {
-      return `Course ${cid} > Quizzes`;
+      return `${courseName} > Quizzes`;
     } else if (pathname.includes('/People')) {
-      return `Course ${cid} > People`;
+      return `${courseName} > People`;
+    } else if (pathname.includes('/Grades')) {
+      return `${courseName} > Grades`;
     }
-    return `Course ${cid}`;
+    return courseName;
   };
 
   return (
@@ -103,7 +111,7 @@ export default function CoursesLayout(
           >
             <div className="bg-dark text-white p-3 d-flex justify-content-between align-items-center">
               <div>
-                <div>Course {cid}</div>
+                <div>{course?.name || `Course ${cid}`}</div>
                 <div className="small">{displayName}</div>
               </div>
               <button onClick={() => setShowCourseNav(false)} className="btn text-white p-0">

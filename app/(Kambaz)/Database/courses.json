@@ -1,0 +1,82 @@
+[
+  {
+    "_id": "CS1234",
+    "name": "React JS",
+    "number": "CS1234",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 4,
+    "description": "Full Stack software developer"
+  },
+  {
+    "_id": "CS5678",
+    "name": "Java",
+    "number": "CS5678",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 3,
+    "description": "Core Java Programming"
+  },
+  {
+    "_id": "CS9101",
+    "name": "Python",
+    "number": "CS9101",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 3,
+    "description": "Python for Beginners"
+  },
+  {
+    "_id": "CS1121",
+    "name": "JavaScript",
+    "number": "CS1121",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 3,
+    "description": "Modern JavaScript Essentials"
+  },
+  {
+    "_id": "CS3141",
+    "name": "HTML & CSS",
+    "number": "CS3141",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 2,
+    "description": "Web Design Fundamentals"
+  },
+  {
+    "_id": "CS4151",
+    "name": "MongoDB",
+    "number": "CS4151",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 3,
+    "description": "NoSQL Database Essentials"
+  },
+  {
+    "_id": "CS5161",
+    "name": "SQL",
+    "number": "CS5161",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 3,
+    "description": "Relational Database Management"
+  },
+  {
+    "_id": "CS6171",
+    "name": "Node.js",
+    "number": "CS6171",
+    "startDate": "2023-01-10",
+    "endDate": "2023-05-15",
+    "department": "Computer Science",
+    "credits": 4,
+    "description": "Backend Development with Node.js"
+  }
+]

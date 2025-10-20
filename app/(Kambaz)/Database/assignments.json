@@ -1,0 +1,33 @@
+[
+  { "_id": "A101", "title": "React Components Assignment", "course": "CS1234", "description": "Build a multi-component React application", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A102", "title": "State Management Project", "course": "CS1234", "description": "Implement useState and useEffect hooks", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A103", "title": "React Router Implementation", "course": "CS1234", "description": "Create a multi-page React application with routing", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A201", "title": "Java OOP Fundamentals", "course": "CS5678", "description": "Implement classes with inheritance and polymorphism", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A202", "title": "Collections Framework", "course": "CS5678", "description": "Work with ArrayList, HashMap, and other collections", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A203", "title": "Java Stream API Project", "course": "CS5678", "description": "Process data using Java Stream API", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A301", "title": "Python Basics Quiz", "course": "CS9101", "description": "Complete Python syntax and data types quiz", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A302", "title": "Data Structures Project", "course": "CS9101", "description": "Implement lists, dictionaries, and sets", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A303", "title": "NumPy and Pandas Analysis", "course": "CS9101", "description": "Analyze data using NumPy and Pandas", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A401", "title": "JavaScript Functions Assignment", "course": "CS1121", "description": "Create various functions and arrow functions", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A402", "title": "Async Programming Project", "course": "CS1121", "description": "Implement promises and async/await", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A403", "title": "DOM Manipulation Exercise", "course": "CS1121", "description": "Build interactive web page with JavaScript", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A501", "title": "HTML Structure Project", "course": "CS3141", "description": "Create semantic HTML5 website", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A502", "title": "CSS Styling Assignment", "course": "CS3141", "description": "Style web pages using CSS and Flexbox", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A503", "title": "Responsive Design Project", "course": "CS3141", "description": "Build responsive website with media queries", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A601", "title": "MongoDB CRUD Operations", "course": "CS4151", "description": "Implement create, read, update, delete operations", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A602", "title": "Aggregation Pipeline Project", "course": "CS4151", "description": "Process data using MongoDB aggregation", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A603", "title": "Mongoose Integration", "course": "CS4151", "description": "Integrate MongoDB with Node.js using Mongoose", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A701", "title": "SQL Query Assignment", "course": "CS5161", "description": "Write complex SQL queries with joins", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A702", "title": "Database Design Project", "course": "CS5161", "description": "Design normalized database schema", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A703", "title": "Advanced SQL Exercise", "course": "CS5161", "description": "Use subqueries and aggregate functions", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" },
+  
+  { "_id": "A801", "title": "Node.js Fundamentals", "course": "CS6171", "description": "Build basic Node.js application", "points": 100, "dueDate": "2024-05-15", "availableDate": "2024-05-01" },
+  { "_id": "A802", "title": "Express REST API", "course": "CS6171", "description": "Create RESTful API with Express.js", "points": 100, "dueDate": "2024-05-22", "availableDate": "2024-05-08" },
+  { "_id": "A803", "title": "Authentication System", "course": "CS6171", "description": "Implement JWT authentication", "points": 100, "dueDate": "2024-05-29", "availableDate": "2024-05-15" }
+]
