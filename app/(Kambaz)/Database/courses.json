@@ -7,7 +7,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 4,
-    "description": "Full Stack software developer"
+    "description": "Full Stack software developer",
+    "image": "/images/react.png"
   },
   {
     "_id": "CS5678",
@@ -17,7 +18,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 3,
-    "description": "Core Java Programming"
+    "description": "Core Java Programming",
+    "image": "/images/java.png"
   },
   {
     "_id": "CS9101",
@@ -27,7 +29,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 3,
-    "description": "Python for Beginners"
+    "description": "Python for Beginners",
+    "image": "/images/python.png"
   },
   {
     "_id": "CS1121",
@@ -37,7 +40,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 3,
-    "description": "Modern JavaScript Essentials"
+    "description": "Modern JavaScript Essentials",
+    "image": "/images/javascript.png"
   },
   {
     "_id": "CS3141",
@@ -47,7 +51,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 2,
-    "description": "Web Design Fundamentals"
+    "description": "Web Design Fundamentals",
+    "image": "/images/html_css.jpeg"
   },
   {
     "_id": "CS4151",
@@ -57,7 +62,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 3,
-    "description": "NoSQL Database Essentials"
+    "description": "NoSQL Database Essentials",
+    "image": "/images/mongodb.png"
   },
   {
     "_id": "CS5161",
@@ -67,7 +73,8 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 3,
-    "description": "Relational Database Management"
+    "description": "Relational Database Management",
+    "image": "/images/sql.jpeg"
   },
   {
     "_id": "CS6171",
@@ -77,6 +84,7 @@
     "endDate": "2023-05-15",
     "department": "Computer Science",
     "credits": 4,
-    "description": "Backend Development with Node.js"
+    "description": "Backend Development with Node.js",
+    "image": "/images/node.png"
   }
 ]
