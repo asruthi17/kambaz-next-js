@@ -11,7 +11,8 @@ import ModuleControlButtons from "./ModuleControlButtons";
 import { addModule, editModule, updateModule, deleteModule } from "./reducer";
 
 export default function Modules() {
-  const { cid } = useParams();
+  const params = useParams();
+  const cid = params.cid as string;
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
