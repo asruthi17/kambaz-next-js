@@ -26,12 +26,6 @@ export default function Signin() {
   return (
     <div id="wd-signin-screen" className="p-4" style={{ maxWidth: "400px" }}>
       <h3>Sign in</h3>
-      
-      {/* Default credentials info */}
-      <div className="mb-3">
-        <p className="mb-1"><strong>Student:</strong> dark_knight / wayne123</p>
-        <p className="mb-0"><strong>Faculty:</strong> iron_man / stark123</p>
-      </div>
 
       <Form.Control
         value={credentials.username || ""}
