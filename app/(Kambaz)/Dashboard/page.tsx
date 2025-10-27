@@ -22,7 +22,7 @@ export default function Dashboard() {
     description: "New Description",
   });
 
-  const [showAllCourses, setShowAllCourses] = useState(true); // CHANGED FROM false TO true
+  const [showAllCourses, setShowAllCourses] = useState(true);
 
   const isFaculty = currentUser?.role === "FACULTY";
 
@@ -110,9 +110,9 @@ export default function Dashboard() {
             : "Published Courses"}{" "}
           ({displayedCourses.length})
         </h2>
-        {currentUser && (
+        {currentUser && !isFaculty && (
           <Button
-            variant={showAllCourses ? "danger" : "primary"}
+            variant="primary"
             onClick={() => setShowAllCourses(!showAllCourses)}
             id="wd-enrollments-btn"
           >
@@ -166,27 +166,27 @@ export default function Dashboard() {
                   <CardBody className="pt-0">
                     {/* Show Go button or Sign In prompt */}
                     {!currentUser ? (
-                      <Button
-                        variant="secondary"
-                        className="w-100 mb-2"
-                        as={Link}
-                        href="/Account/Signin"
-                      >
-                        Sign in to Enroll
-                      </Button>
+                      <Link href="/Account/Signin" className="text-decoration-none">
+                        <Button
+                          variant="secondary"
+                          className="w-100 mb-2"
+                        >
+                          Sign in to Enroll
+                        </Button>
+                      </Link>
                     ) : (enrolled || isFaculty) ? (
-                      <Button
-                        variant="primary"
-                        className="w-100 mb-2"
-                        as={Link}
-                        href={`/Courses/${course._id}/Home`}
-                      >
-                        Go
-                      </Button>
+                      <Link href={`/Courses/${course._id}/Home`} className="text-decoration-none">
+                        <Button
+                          variant="primary"
+                          className="w-100 mb-2"
+                        >
+                          Go
+                        </Button>
+                      </Link>
                     ) : null}
 
-                    {/* Enroll/Unenroll Buttons - Only in "All Courses" view and logged in */}
-                    {showAllCourses && currentUser && !isFaculty && (
+                    {/* Enroll/Unenroll Buttons - Show for all non-faculty logged-in users */}
+                    {currentUser && !isFaculty && (
                       <Button
                         variant={enrolled ? "danger" : "success"}
                         className="w-100 mb-2"
