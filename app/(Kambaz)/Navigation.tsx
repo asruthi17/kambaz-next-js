@@ -10,13 +10,14 @@ import { FaTimes } from "react-icons/fa";
 
 export default function KambazNavigation({ isMobile = false, onClose }: { isMobile?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
+  const isCoursePage = pathname.includes("/Courses/");
 
   const links = [
-    { label: "Dashboard", path: "/Dashboard", icon: AiOutlineDashboard },
-    { label: "Courses", path: "/Courses", icon: LiaBookSolid },
-    { label: "Calendar", path: "/Calendar", icon: IoCalendarOutline },
-    { label: "Inbox", path: "/Inbox", icon: FaInbox },
-    { label: "Labs", path: "/Labs", icon: LiaCogSolid },
+    { label: "Dashboard", path: "/Dashboard", icon: AiOutlineDashboard, clickable: true },
+    { label: "Courses", path: "/Courses", icon: LiaBookSolid, clickable: false },
+    { label: "Calendar", path: "/Calendar", icon: IoCalendarOutline, clickable: true },
+    { label: "Inbox", path: "/Inbox", icon: FaInbox, clickable: true },
+    { label: "Labs", path: "/Labs", icon: LiaCogSolid, clickable: true },
   ];
 
   if (isMobile) {
@@ -42,6 +43,19 @@ export default function KambazNavigation({ isMobile = false, onClose }: { isMobi
           </Link>
           {links.map((link) => {
             const Icon = link.icon;
+            if (!link.clickable) {
+              return (
+                <div
+                  key={link.path}
+                  className="d-flex align-items-center text-decoration-none text-danger p-2"
+                  style={{ cursor: "default" }}
+                >
+                  <Icon size={28} className="me-3" />
+                  <span className="fs-5">{link.label}</span>
+                  <span className="ms-auto">&gt;</span>
+                </div>
+              );
+            }
             return (
               <Link
                 key={link.path}
@@ -81,18 +95,36 @@ export default function KambazNavigation({ isMobile = false, onClose }: { isMobi
         Account
       </ListGroupItem>
 
-      {links.map((link) => (
-        <ListGroupItem 
-          key={link.path} 
-          as={Link} 
-          href={link.path}
-          className={`bg-black text-center border-0 ${pathname.includes(link.label) ? "text-danger bg-white" : "text-white bg-black"}`}
-        >
-          {link.icon({ className: "fs-1 text-danger" })}
-          <br />
-          {link.label}
-        </ListGroupItem>
-      ))}
+      {links.map((link) => {
+        const isActive = link.label === "Courses" ? isCoursePage : pathname.includes(link.label);
+        
+        if (!link.clickable) {
+          return (
+            <ListGroupItem 
+              key={link.path}
+              className={`text-center border-0 ${isActive ? "bg-white text-danger" : "bg-black text-white"}`}
+              style={{ cursor: "default" }}
+            >
+              {link.icon({ className: `fs-1 text-danger` })}
+              <br />
+              {link.label}
+            </ListGroupItem>
+          );
+        }
+        
+        return (
+          <ListGroupItem 
+            key={link.path} 
+            as={Link} 
+            href={link.path}
+            className={`bg-black text-center border-0 ${isActive ? "text-danger bg-white" : "text-white bg-black"}`}
+          >
+            {link.icon({ className: "fs-1 text-danger" })}
+            <br />
+            {link.label}
+          </ListGroupItem>
+        );
+      })}
     </ListGroup>
   );
 }

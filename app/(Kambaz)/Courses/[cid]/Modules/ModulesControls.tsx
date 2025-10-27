@@ -1,46 +1,91 @@
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from "react-bootstrap";
+"use client";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
-import { BsSlashCircle } from "react-icons/bs";
+import { Button } from "react-bootstrap";
 import GreenCheckmark from "./GreenCheckmark";
+import ModuleEditor from "./ModuleEditor";
 
-export default function ModulesControls() {
+export default function ModulesControls({
+  moduleName,
+  setModuleName,
+  addModule,
+}: {
+  moduleName: string;
+  setModuleName: (title: string) => void;
+  addModule: () => void;
+}) {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div id="wd-modules-controls" className="text-nowrap">
-      <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-module-btn">
+      {/* Add Module Button - Make same size as others */}
+      <Button
+        variant="danger"
+        size="lg"
+        className="me-1 float-end"
+        onClick={handleShow}
+        id="wd-add-module-btn"
+      >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Module
       </Button>
-      
-      <Dropdown className="float-end me-2">
-        <DropdownToggle variant="secondary" size="lg" id="wd-publish-all-btn" className="text-dark">
-          <GreenCheckmark /> Publish All
-        </DropdownToggle>
-        <DropdownMenu>
-          <DropdownItem id="wd-publish-all">
-            <GreenCheckmark /> Publish All
-          </DropdownItem>
-          <DropdownItem id="wd-publish-all-modules-and-items">
-            <GreenCheckmark /> Publish all modules and items
-          </DropdownItem>
-          <DropdownItem id="wd-publish-modules-only">
-            <GreenCheckmark /> Publish modules only
-          </DropdownItem>
-          <DropdownItem id="wd-unpublish-all-modules-and-items">
-            <BsSlashCircle className="me-1 text-muted" /> Unpublish all modules and items
-          </DropdownItem>
-          <DropdownItem id="wd-unpublish-modules-only">
-            <BsSlashCircle className="me-1 text-muted" /> Unpublish modules only
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
 
-      <Button variant="secondary" size="lg" className="me-1 float-end text-dark" id="wd-view-progress">
+      <div className="dropdown d-inline me-1 float-end">
+        <button
+          id="wd-publish-all-btn"
+          className="btn btn-lg btn-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          <GreenCheckmark />
+          Publish All
+        </button>
+        <ul className="dropdown-menu">
+          <li>
+            <a id="wd-publish-all-modules-and-items-btn" className="dropdown-item" href="#">
+              <GreenCheckmark />
+              Publish all modules and items
+            </a>
+          </li>
+          <li>
+            <a id="wd-publish-modules-only-button" className="dropdown-item" href="#">
+              <GreenCheckmark />
+              Publish modules only
+            </a>
+          </li>
+          <li>
+            <a id="wd-unpublish-all-modules-and-items" className="dropdown-item" href="#">
+              Unpublish all modules and items
+            </a>
+          </li>
+          <li>
+            <a id="wd-unpublish-modules-only" className="dropdown-item" href="#">
+              Unpublish modules only
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
+      <button id="wd-view-progress" className="btn btn-lg btn-secondary me-1 float-end">
         View Progress
-      </Button>
+      </button>
 
-      <Button variant="secondary" size="lg" className="me-1 float-end text-dark" id="wd-collapse-all">
+ 
+      <button id="wd-collapse-all" className="btn btn-lg btn-secondary me-1 float-end">
         Collapse All
-      </Button>
+      </button>
+
+      <ModuleEditor
+        show={show}
+        handleClose={handleClose}
+        dialogTitle="Add Module"
+        moduleName={moduleName}
+        setModuleName={setModuleName}
+        addModule={addModule}
+      />
     </div>
   );
 }

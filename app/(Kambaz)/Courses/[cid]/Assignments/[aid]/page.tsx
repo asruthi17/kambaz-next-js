@@ -1,65 +1,111 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 import { Form, Button } from "react-bootstrap";
 import Select from "react-select";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { assignments } from "../../../../Database";
+import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { addAssignment, updateAssignment } from "../reducer";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = assignments.find((assignment: any) => assignment._id === aid);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  // Fallback if assignment not found
-  if (!assignment) {
-    return (
-      <div className="container mt-4">
-        <h3>Assignment not found</h3>
-        <Link href={`/Courses/${cid}/Assignments`} className="btn btn-secondary">
-          Back to Assignments
-        </Link>
-      </div>
-    );
-  }
+  const assignment = useSelector((state: any) =>
+    state.assignmentsReducer.assignments.find((a: any) => a._id === aid)
+  );
 
-  // Extract display ID (A101 -> A1)
-  const idNumber = assignment._id.match(/\d+/)?.[0];
-  const displayId = `A${idNumber?.slice(-1)}`;
+  const isNewAssignment = aid === "new";
+
+  // Form state
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    points: 100,
+    dueDate: "",
+    availableDate: "",
+    availableUntilDate: "",
+  });
+
+  useEffect(() => {
+    if (!isNewAssignment && assignment) {
+      setFormData({
+        title: assignment.title || "",
+        description: assignment.description || "",
+        points: assignment.points || 100,
+        dueDate: assignment.dueDate || "",
+        availableDate: assignment.availableDate || "",
+        availableUntilDate: assignment.availableUntilDate || assignment.dueDate || "",
+      });
+    }
+  }, [assignment, isNewAssignment]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    const fieldName = id.replace("wd-", "").replace(/-./g, (x) => x[1].toUpperCase());
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: id === "wd-points" ? Number(value) : value,
+    }));
+  };
+
+  const handleSave = () => {
+    if (isNewAssignment) {
+      const newAssignment = {
+        _id: `A${Date.now()}`,
+        course: cid as string,
+        ...formData,
+      };
+      dispatch(addAssignment(newAssignment));
+    } else {
+      const updatedAssignment = {
+        _id: aid as string,
+        course: cid as string,
+        ...formData,
+      };
+      dispatch(updateAssignment(updatedAssignment));
+    }
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  const handleCancel = () => {
+    router.push(`/Courses/${cid}/Assignments`);
+  };
+
+  // For new assignments, show default form
+  const displayTitle = isNewAssignment ? "New Assignment" : formData.title;
 
   return (
-    <div style={{ zoom: '0.85' }}>
+    <div style={{ zoom: "0.85" }}>
       <div id="wd-assignments-editor" className="container-fluid p-3">
         <div className="row mb-3">
           <div className="col-12">
             <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-            <Form.Control 
-              id="wd-name" 
-              defaultValue={`${displayId} - ${assignment.title}`} 
-              className="border-dark" 
+            <Form.Control
+              id="wd-title"
+              value={displayTitle}
+              onChange={handleInputChange}
+              className="border-dark"
             />
           </div>
         </div>
 
         <div className="row mb-3">
           <div className="col-12">
-            <div className="border border-dark p-3">
-              <p className="mb-2">
-                {assignment.description || "The assignment is available online"}
-              </p>
-              <p className="mb-2">
-                Submit a link to the landing page of your Web application running on Netlify.
-              </p>
-              <p className="mb-2">The landing page should include the following:</p>
-              <ul>
-                <li>Your full name and section</li>
-                <li>Links to each of the lab assignments</li>
-                <li>Link to the Kambas application</li>
-                <li>Links to all relevant source code repositories</li>
-              </ul>
-              <p className="mb-0">
-                The Kambas application should include a link to navigate back to the landing page.
-              </p>
-            </div>
+            <Form.Label htmlFor="wd-description">Description</Form.Label>
+            <Form.Control
+              as="textarea"
+              id="wd-description"
+              rows={8}
+              value={formData.description}
+              onChange={handleInputChange}
+              className="border-dark"
+              placeholder="The assignment is available online"
+            />
           </div>
         </div>
 
@@ -70,11 +116,12 @@ export default function AssignmentEditor() {
                 Points
               </Form.Label>
               <div className="col-md-9">
-                <Form.Control 
-                  id="wd-points" 
-                  type="number" 
-                  defaultValue={assignment.points} 
-                  className="border-dark" 
+                <Form.Control
+                  id="wd-points"
+                  type="number"
+                  value={formData.points}
+                  onChange={handleInputChange}
+                  className="border-dark"
                 />
               </div>
             </div>
@@ -88,7 +135,11 @@ export default function AssignmentEditor() {
                 Assignment Group
               </Form.Label>
               <div className="col-md-9">
-                <Form.Select id="wd-group" defaultValue="ASSIGNMENTS" className="border-dark">
+                <Form.Select
+                  id="wd-group"
+                  defaultValue="ASSIGNMENTS"
+                  className="border-dark"
+                >
                   <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                   <option value="QUIZZES">QUIZZES</option>
                   <option value="EXAMS">EXAMS</option>
@@ -106,7 +157,11 @@ export default function AssignmentEditor() {
                 Display Grade as
               </Form.Label>
               <div className="col-md-9">
-                <Form.Select id="wd-display-grade-as" defaultValue="Percentage" className="border-dark">
+                <Form.Select
+                  id="wd-display-grade-as"
+                  defaultValue="Percentage"
+                  className="border-dark"
+                >
                   <option value="Percentage">Percentage</option>
                   <option value="Points">Points</option>
                   <option value="Complete/Incomplete">Complete/Incomplete</option>
@@ -126,7 +181,11 @@ export default function AssignmentEditor() {
                 <div className="border border-dark p-3">
                   <div className="row">
                     <div className="col-12">
-                      <Form.Select id="wd-submission-type" defaultValue="Online" className="mb-3 border-dark">
+                      <Form.Select
+                        id="wd-submission-type"
+                        defaultValue="Online"
+                        className="mb-3 border-dark"
+                      >
                         <option value="Online">Online</option>
                         <option value="On Paper">On Paper</option>
                         <option value="External Tool">External Tool</option>
@@ -137,11 +196,36 @@ export default function AssignmentEditor() {
                   <div className="row">
                     <div className="col-12">
                       <div className="mb-2 fw-bold">Online Entry Options</div>
-                      <Form.Check type="checkbox" id="wd-text-entry" label="Text Entry" className="mb-1" />
-                      <Form.Check type="checkbox" id="wd-website-url" label="Website URL" defaultChecked className="mb-1" />
-                      <Form.Check type="checkbox" id="wd-media-recordings" label="Media Recordings" className="mb-1" />
-                      <Form.Check type="checkbox" id="wd-student-annotation" label="Student Annotation" className="mb-1" />
-                      <Form.Check type="checkbox" id="wd-file-upload" label="File Uploads" />
+                      <Form.Check
+                        type="checkbox"
+                        id="wd-text-entry"
+                        label="Text Entry"
+                        className="mb-1"
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        id="wd-website-url"
+                        label="Website URL"
+                        defaultChecked
+                        className="mb-1"
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        id="wd-media-recordings"
+                        label="Media Recordings"
+                        className="mb-1"
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        id="wd-student-annotation"
+                        label="Student Annotation"
+                        className="mb-1"
+                      />
+                      <Form.Check
+                        type="checkbox"
+                        id="wd-file-upload"
+                        label="File Uploads"
+                      />
                     </div>
                   </div>
                 </div>
@@ -153,7 +237,9 @@ export default function AssignmentEditor() {
         <div className="row mb-3">
           <div className="col-12">
             <div className="row">
-              <Form.Label className="col-md-3 col-form-label text-md-end">Assign</Form.Label>
+              <Form.Label className="col-md-3 col-form-label text-md-end">
+                Assign
+              </Form.Label>
               <div className="col-md-9">
                 <div className="border border-dark p-3">
                   <div className="row mb-3">
@@ -173,9 +259,9 @@ export default function AssignmentEditor() {
                           { value: "students", label: "Students only" },
                           { value: "tas", label: "TA's" },
                         ]}
-                        styles={{ 
+                        styles={{
                           container: (base) => ({ ...base, width: "100%" }),
-                          control: (base) => ({ ...base, borderColor: 'black' })
+                          control: (base) => ({ ...base, borderColor: "black" }),
                         }}
                       />
                     </div>
@@ -183,13 +269,16 @@ export default function AssignmentEditor() {
 
                   <div className="row mb-3">
                     <div className="col-12">
-                      <Form.Label htmlFor="wd-due-date" className="fw-bold">Due</Form.Label>
-                      <Form.Control 
-                        id="wd-due-date" 
-                        type="date" 
-                        defaultValue={assignment.dueDate} 
+                      <Form.Label htmlFor="wd-due-date" className="fw-bold">
+                        Due
+                      </Form.Label>
+                      <Form.Control
+                        id="wd-due-date"
+                        type="date"
+                        value={formData.dueDate}
+                        onChange={handleInputChange}
                         className="border-dark"
-                        style={{ borderColor: 'black' }}
+                        style={{ borderColor: "black" }}
                       />
                     </div>
                   </div>
@@ -199,22 +288,24 @@ export default function AssignmentEditor() {
                       <Form.Label htmlFor="wd-available-from" className="fw-bold">
                         Available from
                       </Form.Label>
-                      <Form.Control 
-                        id="wd-available-from" 
-                        type="date" 
-                        defaultValue={assignment.availableDate}
-                        className="border-dark" 
+                      <Form.Control
+                        id="wd-available-date"
+                        type="date"
+                        value={formData.availableDate}
+                        onChange={handleInputChange}
+                        className="border-dark"
                       />
                     </div>
                     <div className="col-md-6">
                       <Form.Label htmlFor="wd-available-until" className="fw-bold">
                         Until
                       </Form.Label>
-                      <Form.Control 
-                        id="wd-available-until" 
-                        type="date" 
-                        defaultValue={assignment.dueDate}
-                        className="border-dark" 
+                      <Form.Control
+                        id="wd-available-until-date"
+                        type="date"
+                        value={formData.availableUntilDate}
+                        onChange={handleInputChange}
+                        className="border-dark"
                       />
                     </div>
                   </div>
@@ -227,12 +318,12 @@ export default function AssignmentEditor() {
         <hr />
         <div className="row">
           <div className="col-12 d-flex justify-content-end">
-            <Link href={`/Courses/${cid}/Assignments`}>
-              <Button variant="light" className="me-2 border">Cancel</Button>
-            </Link>
-            <Link href={`/Courses/${cid}/Assignments`}>
-              <Button variant="danger">Save</Button>
-            </Link>
+            <Button variant="light" className="me-2 border" onClick={handleCancel}>
+              Cancel
+            </Button>
+            <Button variant="danger" onClick={handleSave}>
+              Save
+            </Button>
           </div>
         </div>
       </div>
