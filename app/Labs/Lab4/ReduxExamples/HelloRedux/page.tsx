@@ -1,7 +1,8 @@
 "use client";
-import { useSelector } from "react-redux";
+import { useSelector, Provider } from "react-redux";
+import store from "../../store";
 
-export default function HelloRedux() {
+function HelloReduxComponent() {
   const { message } = useSelector((state: any) => state.helloReducer);
 
   return (
@@ -10,5 +11,13 @@ export default function HelloRedux() {
       <h4>{message}</h4>
       <hr />
     </div>
+  );
+}
+
+export default function HelloRedux() {
+  return (
+    <Provider store={store}>
+      <HelloReduxComponent />
+    </Provider>
   );
 }

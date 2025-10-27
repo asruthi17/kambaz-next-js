@@ -1,10 +1,11 @@
 "use client";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, Provider } from "react-redux";
 import { useState } from "react";
 import { add } from "./addReducer";
 import { FormControl, Button } from "react-bootstrap";
+import store from "../../store";
 
-export default function AddRedux() {
+function AddReduxComponent() {
   const [a, setA] = useState(12);
   const [b, setB] = useState(23);
   const { sum } = useSelector((state: any) => state.addReducer);
@@ -23,5 +24,13 @@ export default function AddRedux() {
       </Button>
       <hr />
     </div>
+  );
+}
+
+export default function AddRedux() {
+  return (
+    <Provider store={store}>
+      <AddReduxComponent />
+    </Provider>
   );
 }
