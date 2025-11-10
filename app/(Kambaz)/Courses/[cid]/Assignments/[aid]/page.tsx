@@ -13,6 +13,14 @@ export default function AssignmentEditor() {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  // Get current user from Redux state
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  
+  // Check if user is faculty/instructor
+  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
+
+  // Students can view but not edit
+
   const assignment = useSelector((state: any) =>
     state.assignmentsReducer.assignments.find((a: any) => a._id === aid)
   );
@@ -54,6 +62,11 @@ export default function AssignmentEditor() {
   };
 
   const handleSave = () => {
+    if (!isFaculty) {
+      alert("Only instructors can save assignments");
+      return;
+    }
+
     if (isNewAssignment) {
       const newAssignment = {
         _id: `A${Date.now()}`,
@@ -76,6 +89,11 @@ export default function AssignmentEditor() {
     router.push(`/Courses/${cid}/Assignments`);
   };
 
+  // Don't render the form if user is not faculty
+  if (!isFaculty && !assignment && !isNewAssignment) {
+    return null;
+  }
+
   // For new assignments, show default form
   const displayTitle = isNewAssignment ? "New Assignment" : formData.title;
 
@@ -90,6 +108,7 @@ export default function AssignmentEditor() {
               value={displayTitle}
               onChange={handleInputChange}
               className="border-dark"
+              disabled={!isFaculty}
             />
           </div>
         </div>
@@ -105,6 +124,7 @@ export default function AssignmentEditor() {
               onChange={handleInputChange}
               className="border-dark"
               placeholder="The assignment is available online"
+              disabled={!isFaculty}
             />
           </div>
         </div>
@@ -122,6 +142,7 @@ export default function AssignmentEditor() {
                   value={formData.points}
                   onChange={handleInputChange}
                   className="border-dark"
+                  disabled={!isFaculty}
                 />
               </div>
             </div>
@@ -139,6 +160,7 @@ export default function AssignmentEditor() {
                   id="wd-group"
                   defaultValue="ASSIGNMENTS"
                   className="border-dark"
+                  disabled={!isFaculty}
                 >
                   <option value="ASSIGNMENTS">ASSIGNMENTS</option>
                   <option value="QUIZZES">QUIZZES</option>
@@ -161,6 +183,7 @@ export default function AssignmentEditor() {
                   id="wd-display-grade-as"
                   defaultValue="Percentage"
                   className="border-dark"
+                  disabled={!isFaculty}
                 >
                   <option value="Percentage">Percentage</option>
                   <option value="Points">Points</option>
@@ -185,6 +208,7 @@ export default function AssignmentEditor() {
                         id="wd-submission-type"
                         defaultValue="Online"
                         className="mb-3 border-dark"
+                        disabled={!isFaculty}
                       >
                         <option value="Online">Online</option>
                         <option value="On Paper">On Paper</option>
@@ -201,6 +225,7 @@ export default function AssignmentEditor() {
                         id="wd-text-entry"
                         label="Text Entry"
                         className="mb-1"
+                        disabled={!isFaculty}
                       />
                       <Form.Check
                         type="checkbox"
@@ -208,23 +233,27 @@ export default function AssignmentEditor() {
                         label="Website URL"
                         defaultChecked
                         className="mb-1"
+                        disabled={!isFaculty}
                       />
                       <Form.Check
                         type="checkbox"
                         id="wd-media-recordings"
                         label="Media Recordings"
                         className="mb-1"
+                        disabled={!isFaculty}
                       />
                       <Form.Check
                         type="checkbox"
                         id="wd-student-annotation"
                         label="Student Annotation"
                         className="mb-1"
+                        disabled={!isFaculty}
                       />
                       <Form.Check
                         type="checkbox"
                         id="wd-file-upload"
                         label="File Uploads"
+                        disabled={!isFaculty}
                       />
                     </div>
                   </div>
@@ -263,6 +292,7 @@ export default function AssignmentEditor() {
                           container: (base) => ({ ...base, width: "100%" }),
                           control: (base) => ({ ...base, borderColor: "black" }),
                         }}
+                        isDisabled={!isFaculty}
                       />
                     </div>
                   </div>
@@ -279,6 +309,7 @@ export default function AssignmentEditor() {
                         onChange={handleInputChange}
                         className="border-dark"
                         style={{ borderColor: "black" }}
+                        disabled={!isFaculty}
                       />
                     </div>
                   </div>
@@ -294,6 +325,7 @@ export default function AssignmentEditor() {
                         value={formData.availableDate}
                         onChange={handleInputChange}
                         className="border-dark"
+                        disabled={!isFaculty}
                       />
                     </div>
                     <div className="col-md-6">
@@ -306,6 +338,7 @@ export default function AssignmentEditor() {
                         value={formData.availableUntilDate}
                         onChange={handleInputChange}
                         className="border-dark"
+                        disabled={!isFaculty}
                       />
                     </div>
                   </div>
@@ -321,9 +354,11 @@ export default function AssignmentEditor() {
             <Button variant="light" className="me-2 border" onClick={handleCancel}>
               Cancel
             </Button>
-            <Button variant="danger" onClick={handleSave}>
-              Save
-            </Button>
+            {isFaculty && (
+              <Button variant="danger" onClick={handleSave}>
+                Save
+              </Button>
+            )}
           </div>
         </div>
       </div>

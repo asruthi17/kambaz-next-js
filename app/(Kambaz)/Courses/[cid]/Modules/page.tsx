@@ -17,15 +17,26 @@ export default function Modules() {
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
 
+  // Get current user from Redux state
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  
+  // Check if user is faculty/instructor
+  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
+
   return (
     <div className="wd-modules">
+      {/* Show ModulesControls for everyone, but disable functionality for students */}
       <ModulesControls
         moduleName={moduleName}
         setModuleName={setModuleName}
         addModule={() => {
+          if (!isFaculty) {
+            return; // Do nothing for students
+          }
           dispatch(addModule({ name: moduleName, course: cid }));
           setModuleName("");
         }}
+        isFaculty={isFaculty}
       />
       <br /><br /><br /><br />
 
@@ -37,11 +48,11 @@ export default function Modules() {
               <div className="wd-title p-3 ps-2 bg-secondary">
                 <BsGripVertical className="me-2 fs-3" />
 
-                {/* Show module name if not editing */}
-                {!module.editing && module.name}
+                {/* Always show module name (never show input for students) */}
+                {(!module.editing || !isFaculty) && module.name}
 
-                {/* Show input field if editing */}
-                {module.editing && (
+                {/* Show input field only if editing AND user is faculty */}
+                {module.editing && isFaculty && (
                   <FormControl
                     className="w-50 d-inline-block"
                     onChange={(e) =>
@@ -58,12 +69,18 @@ export default function Modules() {
                   />
                 )}
 
+                {/* Show module control buttons for everyone, but disable for students */}
                 <ModuleControlButtons
                   moduleId={module._id}
                   deleteModule={(moduleId) => {
+                    if (!isFaculty) return; // Do nothing for students
                     dispatch(deleteModule(moduleId));
                   }}
-                  editModule={(moduleId) => dispatch(editModule(moduleId))}
+                  editModule={(moduleId) => {
+                    if (!isFaculty) return; // Do nothing for students
+                    dispatch(editModule(moduleId));
+                  }}
+                  isFaculty={isFaculty}
                 />
               </div>
 
@@ -73,6 +90,7 @@ export default function Modules() {
                     <ListGroupItem key={lesson._id} className="wd-lesson p-3 ps-1">
                       <BsGripVertical className="me-2 fs-3" />
                       {lesson.name}
+                      {/* Show lesson control buttons for everyone */}
                       <LessonControlButtons />
                     </ListGroupItem>
                   ))}

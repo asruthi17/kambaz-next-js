@@ -14,6 +14,12 @@ export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
   
+  // Get current user from Redux state
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  
+  // Check if user is faculty/instructor
+  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
+  
   const assignments = useSelector((state: any) =>
     state.assignmentsReducer.assignments.filter(
       (assignment: any) => assignment.course === cid
@@ -21,6 +27,10 @@ export default function Assignments() {
   );
 
   const handleDeleteAssignment = (assignmentId: string) => {
+    if (!isFaculty) {
+      alert("Only instructors can delete assignments");
+      return;
+    }
     if (window.confirm("Are you sure you want to remove this assignment?")) {
       dispatch(deleteAssignment(assignmentId));
     }
@@ -37,16 +47,19 @@ export default function Assignments() {
             className="form-control ps-5 border-dark"
           />
         </div>
-        <div>
-          <Button variant="secondary" className="me-2" id="wd-add-assignment-group">
-            <FaPlus className="me-1" /> Group
-          </Button>
-          <Link href={`/Courses/${cid}/Assignments/new`}>
-            <Button variant="danger" id="wd-add-assignment">
-              <FaPlus className="me-1" /> Assignment
+        {/* Only show add buttons for faculty */}
+        {isFaculty && (
+          <div>
+            <Button variant="secondary" className="me-2" id="wd-add-assignment-group">
+              <FaPlus className="me-1" /> Group
             </Button>
-          </Link>
-        </div>
+            <Link href={`/Courses/${cid}/Assignments/new`}>
+              <Button variant="danger" id="wd-add-assignment">
+                <FaPlus className="me-1" /> Assignment
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
 
       <div className="wd-module p-0 mb-3 fs-5 border border-dark">
@@ -66,20 +79,23 @@ export default function Assignments() {
             >
               40% of Total
             </span>
-            <button
-              className="btn btn-outline-dark btn-sm me-2"
-              style={{
-                borderRadius: "50%",
-                width: "32px",
-                height: "32px",
-                padding: "0",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <FaPlus />
-            </button>
+            {/* Only show add button for faculty */}
+            {isFaculty && (
+              <button
+                className="btn btn-outline-dark btn-sm me-2"
+                style={{
+                  borderRadius: "50%",
+                  width: "32px",
+                  height: "32px",
+                  padding: "0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <FaPlus />
+              </button>
+            )}
             <BsThreeDotsVertical className="fs-4" />
           </div>
         </div>
@@ -95,6 +111,7 @@ export default function Assignments() {
                 <BsGripVertical className="me-2 fs-3 text-muted" />
                 <MdEditDocument className="me-3 fs-3 text-success" />
                 <div className="flex-grow-1">
+                  {/* Both faculty and students can view, but link destination differs */}
                   <Link
                     href={`/Courses/${cid}/Assignments/${assignment._id}`}
                     className="wd-assignment-link text-decoration-none text-dark"
@@ -114,13 +131,16 @@ export default function Assignments() {
                 </div>
                 <div className="d-flex align-items-center">
                   <FaCheckCircle className="text-success me-3 fs-5" />
-                  <button
-                    className="btn btn-link text-danger p-0 me-3"
-                    onClick={() => handleDeleteAssignment(assignment._id)}
-                    title="Delete Assignment"
-                  >
-                    <FaTrash className="fs-5" />
-                  </button>
+                  {/* Only show delete button for faculty */}
+                  {isFaculty && (
+                    <button
+                      className="btn btn-link text-danger p-0 me-3"
+                      onClick={() => handleDeleteAssignment(assignment._id)}
+                      title="Delete Assignment"
+                    >
+                      <FaTrash className="fs-5" />
+                    </button>
+                  )}
                   <BsThreeDotsVertical className="fs-5" />
                 </div>
               </div>
