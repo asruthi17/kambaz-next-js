@@ -8,8 +8,8 @@ import { Card, CardBody, CardTitle, CardText, CardImg, Button, Row, Col, FormCon
 import { RootState } from "../store";
 
 export default function Dashboard() {
-  const { courses } = useSelector((state: RootState) => state.coursesReducer);
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { courses } = useSelector((state: any) => state.coursesReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
   const [course, setCourse] = useState<any>({
