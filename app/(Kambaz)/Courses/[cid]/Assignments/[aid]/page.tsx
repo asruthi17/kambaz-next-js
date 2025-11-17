@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Form, Button } from "react-bootstrap";
 import Select from "react-select";

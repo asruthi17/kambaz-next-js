@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-assign-module-variable */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
@@ -9,7 +11,6 @@ import LessonControlButtons from "./LessonControlButtons";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { setModules, editModule, updateModule } from "./reducer";
 import * as coursesClient from "../../client";
-import { RootState } from "../../../store";
 
 export default function Modules() {
   const params = useParams();

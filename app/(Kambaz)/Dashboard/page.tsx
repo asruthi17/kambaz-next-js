@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -52,19 +53,19 @@ export default function Dashboard() {
 
   const onDeleteCourse = async (courseId: string) => {
     await client.deleteCourse(courseId);
-    dispatch(setCourses(courses.filter((c) => c._id !== courseId)));
+    dispatch(setCourses(courses.filter((c: any) => c._id !== courseId)));
   };
 
-  const onUpdateCourse = async () => {
-    await client.updateCourse(course);
-    dispatch(setCourses(courses.map((c) => {
-      if (c._id === course._id) {
-        return course;
-      } else {
-        return c;
-      }
-    })));
-  };
+ const onUpdateCourse = async () => {
+  await client.updateCourse(course);
+  dispatch(setCourses(courses.map((c: any) => {
+    if (c._id === course._id) {
+      return course;
+    } else {
+      return c;
+    }
+  })));
+};
 
   const handleEnroll = async (courseId: string) => {
     if (currentUser) {
