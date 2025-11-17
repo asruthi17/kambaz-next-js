@@ -11,7 +11,7 @@ import { RootState } from "../../../../store";
 
 export default function PeopleTable() {
   const { cid } = useParams();
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [users, setUsers] = useState<any[]>([]);
 
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";

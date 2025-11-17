@@ -9,14 +9,14 @@ import * as coursesClient from "../../../client";
 import { RootState } from "../../../../store";
 
 export default function AssignmentEditor() {
-  const { cid, aid } = useParams();
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+const { cid, aid } = useParams();
+const router = useRouter();
+const dispatch = useDispatch();
+const { currentUser } = useSelector((state: any) => state.accountReducer);
+const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
-  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
-  const isNewAssignment = aid === "new";
+const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
+const isNewAssignment = aid === "new";
 
   const [formData, setFormData] = useState({
     title: "",

@@ -15,8 +15,8 @@ export default function Modules() {
   const params = useParams();
   const cid = params.cid as string;
   const [moduleName, setModuleName] = useState("");
-  const { modules } = useSelector((state: RootState) => state.modulesReducer);
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { modules } = useSelector((state: any) => state.modulesReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const dispatch = useDispatch();
 
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";

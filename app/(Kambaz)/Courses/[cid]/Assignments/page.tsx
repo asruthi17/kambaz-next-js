@@ -16,8 +16,8 @@ import { RootState } from "../../../store";
 export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
-  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const { assignments } = useSelector((state: any) => state.assignmentsReducer);
 
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
 
