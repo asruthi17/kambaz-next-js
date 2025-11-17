@@ -1,33 +1,23 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Form, Button } from "react-bootstrap";
 import Select from "react-select";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { addAssignment, updateAssignment } from "../reducer";
+import * as coursesClient from "../../../client";
+import { RootState } from "../../../../store";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const router = useRouter();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
 
-  // Get current user from Redux state
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  
-  // Check if user is faculty/instructor
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
-
-  // Students can view but not edit
-
-  const assignment = useSelector((state: any) =>
-    state.assignmentsReducer.assignments.find((a: any) => a._id === aid)
-  );
-
   const isNewAssignment = aid === "new";
 
-  // Form state
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -38,17 +28,20 @@ export default function AssignmentEditor() {
   });
 
   useEffect(() => {
-    if (!isNewAssignment && assignment) {
-      setFormData({
-        title: assignment.title || "",
-        description: assignment.description || "",
-        points: assignment.points || 100,
-        dueDate: assignment.dueDate || "",
-        availableDate: assignment.availableDate || "",
-        availableUntilDate: assignment.availableUntilDate || assignment.dueDate || "",
-      });
+    if (!isNewAssignment) {
+      const assignment = assignments.find((a: any) => a._id === aid);
+      if (assignment) {
+        setFormData({
+          title: assignment.title || "",
+          description: assignment.description || "",
+          points: assignment.points || 100,
+          dueDate: assignment.dueDate || "",
+          availableDate: assignment.availableDate || "",
+          availableUntilDate: assignment.availableUntilDate || "",
+        });
+      }
     }
-  }, [assignment, isNewAssignment]);
+  }, [aid, assignments, isNewAssignment]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -61,26 +54,22 @@ export default function AssignmentEditor() {
     }));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!isFaculty) {
       alert("Only instructors can save assignments");
       return;
     }
 
     if (isNewAssignment) {
-      const newAssignment = {
-        _id: `A${Date.now()}`,
-        course: cid as string,
-        ...formData,
-      };
+      const newAssignment = await coursesClient.createAssignmentForCourse(
+        cid as string,
+        formData
+      );
       dispatch(addAssignment(newAssignment));
     } else {
-      const updatedAssignment = {
-        _id: aid as string,
-        course: cid as string,
-        ...formData,
-      };
-      dispatch(updateAssignment(updatedAssignment));
+      const updatedAssignment = { ...formData, _id: aid as string };
+      await coursesClient.updateAssignment(updatedAssignment);
+      dispatch(updateAssignment(updatedAssignment as any));
     }
     router.push(`/Courses/${cid}/Assignments`);
   };
@@ -89,23 +78,15 @@ export default function AssignmentEditor() {
     router.push(`/Courses/${cid}/Assignments`);
   };
 
-  // Don't render the form if user is not faculty
-  if (!isFaculty && !assignment && !isNewAssignment) {
-    return null;
-  }
-
-  // For new assignments, show default form
-  const displayTitle = isNewAssignment ? "New Assignment" : formData.title;
-
   return (
     <div style={{ zoom: "0.85" }}>
       <div id="wd-assignments-editor" className="container-fluid p-3">
         <div className="row mb-3">
           <div className="col-12">
-            <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
+            <Form.Label htmlFor="wd-title">Assignment Name</Form.Label>
             <Form.Control
               id="wd-title"
-              value={displayTitle}
+              value={formData.title}
               onChange={handleInputChange}
               className="border-dark"
               disabled={!isFaculty}
@@ -308,7 +289,6 @@ export default function AssignmentEditor() {
                         value={formData.dueDate}
                         onChange={handleInputChange}
                         className="border-dark"
-                        style={{ borderColor: "black" }}
                         disabled={!isFaculty}
                       />
                     </div>
@@ -316,7 +296,7 @@ export default function AssignmentEditor() {
 
                   <div className="row">
                     <div className="col-md-6 mb-3 mb-md-0">
-                      <Form.Label htmlFor="wd-available-from" className="fw-bold">
+                      <Form.Label htmlFor="wd-available-date" className="fw-bold">
                         Available from
                       </Form.Label>
                       <Form.Control
@@ -329,7 +309,7 @@ export default function AssignmentEditor() {
                       />
                     </div>
                     <div className="col-md-6">
-                      <Form.Label htmlFor="wd-available-until" className="fw-bold">
+                      <Form.Label htmlFor="wd-available-until-date" className="fw-bold">
                         Until
                       </Form.Label>
                       <Form.Control

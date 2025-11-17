@@ -5,6 +5,7 @@ import KambazNavigation from "./Navigation";
 import { FaBars } from "react-icons/fa";
 import store from "./store";
 import { Provider } from "react-redux";
+import Session from "./Account/Session";
 import "./styles.css";
 
 export default function KambazLayout({
@@ -22,58 +23,60 @@ export default function KambazLayout({
 
   return (
     <Provider store={store}>
-      <div id="wd-kambaz" style={{ zoom: '0.85', minHeight: '100vh' }}>
-        {!isCoursePage && (
-          <div className="d-md-none bg-dark text-white p-3">
-            <button 
-              onClick={() => setShowKambazNav(!showKambazNav)} 
-              className="btn text-white p-0"
+      <Session>
+        <div id="wd-kambaz" style={{ zoom: '0.85', minHeight: '100vh' }}>
+          {!isCoursePage && (
+            <div className="d-md-none bg-dark text-white p-3">
+              <button 
+                onClick={() => setShowKambazNav(!showKambazNav)} 
+                className="btn text-white p-0"
+              >
+                <FaBars size={24} />
+              </button>
+            </div>
+          )}
+
+          <div className="d-flex" style={{ minHeight: '100vh' }}>
+            <div 
+              className="d-none d-md-block position-fixed" 
+              style={{ 
+                width: '110px', 
+                minHeight: '100vh', 
+                height: '100%', 
+                zIndex: 2, 
+                backgroundColor: 'black', 
+                top: 0, 
+                left: 0, 
+                bottom: 0 
+              }}
             >
-              <FaBars size={24} />
-            </button>
+              <KambazNavigation />
+            </div>
+            <div className="wd-main-content-offset p-3 flex-fill">
+              {children}
+            </div>
           </div>
-        )}
 
-        <div className="d-flex" style={{ minHeight: '100vh' }}>
-          <div 
-            className="d-none d-md-block position-fixed" 
-            style={{ 
-              width: '110px', 
-              minHeight: '100vh', 
-              height: '100%', 
-              zIndex: 2, 
-              backgroundColor: 'black', 
-              top: 0, 
-              left: 0, 
-              bottom: 0 
-            }}
-          >
-            <KambazNavigation />
-          </div>
-          <div className="wd-main-content-offset p-3 flex-fill">
-            {children}
-          </div>
+          {showKambazNav && (
+            <div 
+              className="position-fixed" 
+              style={{ 
+                width: '100%', 
+                height: '100vh', 
+                zIndex: 2000, 
+                top: 0, 
+                left: 0, 
+                backgroundColor: 'white' 
+              }}
+            >
+              <KambazNavigation 
+                isMobile={true} 
+                onClose={() => setShowKambazNav(false)} 
+              />
+            </div>
+          )}
         </div>
-
-        {showKambazNav && (
-          <div 
-            className="position-fixed" 
-            style={{ 
-              width: '100%', 
-              height: '100vh', 
-              zIndex: 2000, 
-              top: 0, 
-              left: 0, 
-              backgroundColor: 'white' 
-            }}
-          >
-            <KambazNavigation 
-              isMobile={true} 
-              onClose={() => setShowKambazNav(false)} 
-            />
-          </div>
-        )}
-      </div>
+      </Session>
     </Provider>
   );
 }

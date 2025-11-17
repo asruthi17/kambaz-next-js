@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { FaPlus, FaTrash } from "react-icons/fa6";
@@ -8,33 +9,37 @@ import { FaCheckCircle } from "react-icons/fa";
 import { MdEditDocument } from "react-icons/md";
 import { Button } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment } from "./reducer";
+import * as coursesClient from "../../client";
+import { RootState } from "../../../store";
 
 export default function Assignments() {
   const { cid } = useParams();
   const dispatch = useDispatch();
-  
-  // Get current user from Redux state
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  
-  // Check if user is faculty/instructor
-  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
-  
-  const assignments = useSelector((state: any) =>
-    state.assignmentsReducer.assignments.filter(
-      (assignment: any) => assignment.course === cid
-    )
-  );
+  const { currentUser } = useSelector((state: RootState) => state.accountReducer);
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
 
-  const handleDeleteAssignment = (assignmentId: string) => {
+  const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
+
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  const handleDeleteAssignment = async (assignmentId: string) => {
     if (!isFaculty) {
       alert("Only instructors can delete assignments");
       return;
     }
     if (window.confirm("Are you sure you want to remove this assignment?")) {
+      await coursesClient.deleteAssignment(assignmentId);
       dispatch(deleteAssignment(assignmentId));
     }
   };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
 
   return (
     <div id="wd-assignments">
@@ -47,7 +52,6 @@ export default function Assignments() {
             className="form-control ps-5 border-dark"
           />
         </div>
-        {/* Only show add buttons for faculty */}
         {isFaculty && (
           <div>
             <Button variant="secondary" className="me-2" id="wd-add-assignment-group">
@@ -79,7 +83,6 @@ export default function Assignments() {
             >
               40% of Total
             </span>
-            {/* Only show add button for faculty */}
             {isFaculty && (
               <button
                 className="btn btn-outline-dark btn-sm me-2"
@@ -111,7 +114,6 @@ export default function Assignments() {
                 <BsGripVertical className="me-2 fs-3 text-muted" />
                 <MdEditDocument className="me-3 fs-3 text-success" />
                 <div className="flex-grow-1">
-                  {/* Both faculty and students can view, but link destination differs */}
                   <Link
                     href={`/Courses/${cid}/Assignments/${assignment._id}`}
                     className="wd-assignment-link text-decoration-none text-dark"
@@ -131,7 +133,6 @@ export default function Assignments() {
                 </div>
                 <div className="d-flex align-items-center">
                   <FaCheckCircle className="text-success me-3 fs-5" />
-                  {/* Only show delete button for faculty */}
                   {isFaculty && (
                     <button
                       className="btn btn-link text-danger p-0 me-3"
