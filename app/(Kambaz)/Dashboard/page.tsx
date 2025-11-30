@@ -67,25 +67,25 @@ export default function Dashboard() {
   })));
 };
 
-  const handleEnroll = async (courseId: string) => {
-    if (currentUser) {
-      await client.enrollInCourse(courseId);
-      setEnrolledCourseIds([...enrolledCourseIds, courseId]);
-      if (!showAllCourses) {
-        await fetchCourses();
-      }
+const handleEnrollInCourse = async (courseId: string) => {
+  if (currentUser) {
+    await client.enrollInCourse(courseId);  // Only courseId
+    setEnrolledCourseIds([...enrolledCourseIds, courseId]);
+    if (!showAllCourses) {
+      await fetchCourses();
     }
-  };
+  }
+};
 
-  const handleUnenroll = async (courseId: string) => {
-    if (currentUser) {
-      await client.unenrollFromCourse(courseId);
-      setEnrolledCourseIds(enrolledCourseIds.filter(id => id !== courseId));
-      if (!showAllCourses) {
-        await fetchCourses();
-      }
+const handleUnenrollFromCourse = async (courseId: string) => {
+  if (currentUser) {
+    await client.unenrollFromCourse(courseId);  // Only courseId
+    setEnrolledCourseIds(enrolledCourseIds.filter(id => id !== courseId));
+    if (!showAllCourses) {
+      await fetchCourses();
     }
-  };
+  }
+};
 
   const isEnrolled = (courseId: string) => {
     return enrolledCourseIds.includes(courseId);
@@ -173,6 +173,14 @@ export default function Dashboard() {
         <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4">
           {safeCourses.map((course: any) => {
             const enrolled = isEnrolled(course._id);
+
+            function handleUnenroll(_id: any) {
+              throw new Error("Function not implemented.");
+            }
+
+            function handleEnroll(_id: any) {
+              throw new Error("Function not implemented.");
+            }
 
             return (
               <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>

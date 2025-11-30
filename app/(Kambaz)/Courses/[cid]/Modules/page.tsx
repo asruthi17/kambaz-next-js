@@ -34,19 +34,19 @@ export default function Modules() {
     dispatch(setModules([...modules, module]));
     setModuleName("");
   };
+  
+const onRemoveModule = async (moduleId: string) => {
+  if (!isFaculty) return;
+  await coursesClient.deleteModule(cid as string, moduleId); // Add cid here
+  dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
+};
 
-  const onRemoveModule = async (moduleId: string) => {
-    if (!isFaculty) return;
-    await coursesClient.deleteModule(moduleId);
-    dispatch(setModules(modules.filter((m: any) => m._id !== moduleId)));
-  };
-
-  const onUpdateModule = async (module: any) => {
-    if (!isFaculty) return;
-    await coursesClient.updateModule(module);
-    const newModules = modules.map((m: any) => (m._id === module._id ? module : m));
-    dispatch(setModules(newModules));
-  };
+const onUpdateModule = async (module: any) => {
+  if (!isFaculty) return;
+  await coursesClient.updateModule(cid as string, module); // Add cid here
+  const newModules = modules.map((m: any) => (m._id === module._id ? module : m));
+  dispatch(setModules(newModules));
+};
 
   useEffect(() => {
     fetchModules();

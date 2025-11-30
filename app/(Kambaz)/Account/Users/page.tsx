@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import PeopleTable from "../../Courses/[cid]/People/Table/page";
 import { useState, useEffect } from "react";

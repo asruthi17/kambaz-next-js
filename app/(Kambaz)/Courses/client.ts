@@ -6,14 +6,15 @@ const axiosWithCredentials = axios.create({ withCredentials: true });
 const HTTP_SERVER = process.env.NEXT_PUBLIC_HTTP_SERVER;
 const COURSES_API = `${HTTP_SERVER}/api/courses`;
 const USERS_API = `${HTTP_SERVER}/api/users`;
-const MODULES_API = `${HTTP_SERVER}/api/modules`;
 const ASSIGNMENTS_API = `${HTTP_SERVER}/api/assignments`;
 
+// Users for Course
 export const findUsersForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
 };
 
+// Enrollments - Simplified to always use "current" user
 export const enrollInCourse = async (courseId: string) => {
   const response = await axiosWithCredentials.post(
     `${USERS_API}/current/courses/${courseId}/enroll`
@@ -28,6 +29,7 @@ export const unenrollFromCourse = async (courseId: string) => {
   return response.data;
 };
 
+// Assignments
 export const findAssignmentsForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
   return response.data;
@@ -48,6 +50,7 @@ export const updateAssignment = async (assignment: any) => {
   return data;
 };
 
+// Courses
 export const fetchAllCourses = async () => {
   const { data } = await axios.get(COURSES_API);
   return data;
@@ -73,6 +76,7 @@ export const updateCourse = async (course: any) => {
   return data;
 };
 
+// Modules
 export const findModulesForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/modules`);
   return response.data;
@@ -83,12 +87,15 @@ export const createModuleForCourse = async (courseId: string, module: any) => {
   return response.data;
 };
 
-export const deleteModule = async (moduleId: string) => {
-  const response = await axios.delete(`${MODULES_API}/${moduleId}`);
+export const deleteModule = async (courseId: string, moduleId: string) => {
+  const response = await axios.delete(`${COURSES_API}/${courseId}/modules/${moduleId}`);
   return response.data;
 };
 
-export const updateModule = async (module: any) => {
-  const { data } = await axios.put(`${MODULES_API}/${module._id}`, module);
+export const updateModule = async (courseId: string, module: any) => {
+  const { data } = await axios.put(
+    `${COURSES_API}/${courseId}/modules/${module._id}`,
+    module
+  );
   return data;
 };

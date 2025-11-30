@@ -8,7 +8,75 @@
     "department": "Computer Science",
     "credits": 4,
     "description": "Full Stack software developer",
-    "image": "/images/react.png"
+    "image": "/images/react.png",
+    "modules": [
+      {
+        "_id": "M101",
+        "name": "Introduction to React Basics",
+        "description": "Fundamental concepts of React including components and JSX.",
+        "lessons": [
+          {
+            "_id": "L101",
+            "name": "React Components",
+            "description": "Understanding functional and class components."
+          },
+          {
+            "_id": "L102",
+            "name": "JSX Fundamentals",
+            "description": "Learning JSX syntax and expressions."
+          },
+          {
+            "_id": "L103",
+            "name": "Props and State",
+            "description": "Managing component data with props and state."
+          }
+        ]
+      },
+      {
+        "_id": "M102",
+        "name": "React Hooks",
+        "description": "Understanding and implementing React Hooks for state management.",
+        "lessons": [
+          {
+            "_id": "L201",
+            "name": "useState Hook",
+            "description": "Managing component state with useState."
+          },
+          {
+            "_id": "L202",
+            "name": "useEffect Hook",
+            "description": "Handling side effects in functional components."
+          },
+          {
+            "_id": "L203",
+            "name": "Custom Hooks",
+            "description": "Creating reusable custom hooks."
+          }
+        ]
+      },
+      {
+        "_id": "M103",
+        "name": "Advanced React Patterns",
+        "description": "Advanced patterns and best practices in React development.",
+        "lessons": [
+          {
+            "_id": "L301",
+            "name": "Context API",
+            "description": "Managing global state with Context API."
+          },
+          {
+            "_id": "L302",
+            "name": "React Router",
+            "description": "Implementing navigation with React Router."
+          },
+          {
+            "_id": "L303",
+            "name": "Performance Optimization",
+            "description": "Optimizing React applications for performance."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS5678",
@@ -19,7 +87,75 @@
     "department": "Computer Science",
     "credits": 3,
     "description": "Core Java Programming",
-    "image": "/images/java.png"
+    "image": "/images/java.png",
+    "modules": [
+      {
+        "_id": "M201",
+        "name": "Java Fundamentals",
+        "description": "Core Java programming concepts and syntax.",
+        "lessons": [
+          {
+            "_id": "L401",
+            "name": "Variables and Data Types",
+            "description": "Understanding Java data types and variables."
+          },
+          {
+            "_id": "L402",
+            "name": "Control Flow",
+            "description": "Conditional statements and loops in Java."
+          },
+          {
+            "_id": "L403",
+            "name": "Methods and Functions",
+            "description": "Creating and using methods in Java."
+          }
+        ]
+      },
+      {
+        "_id": "M202",
+        "name": "Object-Oriented Programming",
+        "description": "Understanding OOP principles in Java.",
+        "lessons": [
+          {
+            "_id": "L501",
+            "name": "Classes and Objects",
+            "description": "Creating classes and instantiating objects."
+          },
+          {
+            "_id": "L502",
+            "name": "Inheritance and Polymorphism",
+            "description": "Implementing inheritance and polymorphism."
+          },
+          {
+            "_id": "L503",
+            "name": "Encapsulation and Abstraction",
+            "description": "Applying encapsulation and abstraction principles."
+          }
+        ]
+      },
+      {
+        "_id": "M203",
+        "name": "Java Collections Framework",
+        "description": "Working with Java collections and data structures.",
+        "lessons": [
+          {
+            "_id": "L601",
+            "name": "Lists and Sets",
+            "description": "Using ArrayList, LinkedList, and HashSet."
+          },
+          {
+            "_id": "L602",
+            "name": "Maps and Queues",
+            "description": "Working with HashMap and Queue interfaces."
+          },
+          {
+            "_id": "L603",
+            "name": "Stream API",
+            "description": "Processing collections with Stream API."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS9101",
@@ -30,7 +166,75 @@
     "department": "Computer Science",
     "credits": 3,
     "description": "Python for Beginners",
-    "image": "/images/python.png"
+    "image": "/images/python.png",
+    "modules": [
+      {
+        "_id": "M301",
+        "name": "Python Basics",
+        "description": "Introduction to Python programming language.",
+        "lessons": [
+          {
+            "_id": "L701",
+            "name": "Python Syntax",
+            "description": "Understanding Python syntax and indentation."
+          },
+          {
+            "_id": "L702",
+            "name": "Data Types and Variables",
+            "description": "Working with Python data types."
+          },
+          {
+            "_id": "L703",
+            "name": "Functions and Modules",
+            "description": "Creating functions and importing modules."
+          }
+        ]
+      },
+      {
+        "_id": "M302",
+        "name": "Python Data Structures",
+        "description": "Understanding lists, tuples, dictionaries, and sets.",
+        "lessons": [
+          {
+            "_id": "L801",
+            "name": "Lists and Tuples",
+            "description": "Working with ordered collections."
+          },
+          {
+            "_id": "L802",
+            "name": "Dictionaries",
+            "description": "Using key-value pairs in Python."
+          },
+          {
+            "_id": "L803",
+            "name": "Sets and Comprehensions",
+            "description": "Using sets and list comprehensions."
+          }
+        ]
+      },
+      {
+        "_id": "M303",
+        "name": "Python Libraries",
+        "description": "Working with popular Python libraries.",
+        "lessons": [
+          {
+            "_id": "L901",
+            "name": "NumPy Basics",
+            "description": "Introduction to NumPy for numerical computing."
+          },
+          {
+            "_id": "L902",
+            "name": "Pandas Fundamentals",
+            "description": "Data manipulation with Pandas."
+          },
+          {
+            "_id": "L903",
+            "name": "Matplotlib Visualization",
+            "description": "Creating visualizations with Matplotlib."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS1121",
@@ -41,7 +245,75 @@
     "department": "Computer Science",
     "credits": 3,
     "description": "Modern JavaScript Essentials",
-    "image": "/images/javascript.png"
+    "image": "/images/javascript.png",
+    "modules": [
+      {
+        "_id": "M401",
+        "name": "JavaScript Fundamentals",
+        "description": "Core JavaScript concepts and ES6+ features.",
+        "lessons": [
+          {
+            "_id": "L1001",
+            "name": "Variables and Scope",
+            "description": "Understanding var, let, and const."
+          },
+          {
+            "_id": "L1002",
+            "name": "Functions and Arrow Functions",
+            "description": "Working with different function types."
+          },
+          {
+            "_id": "L1003",
+            "name": "Objects and Arrays",
+            "description": "Manipulating objects and arrays."
+          }
+        ]
+      },
+      {
+        "_id": "M402",
+        "name": "Asynchronous JavaScript",
+        "description": "Understanding promises, async/await, and callbacks.",
+        "lessons": [
+          {
+            "_id": "L1101",
+            "name": "Callbacks",
+            "description": "Working with callback functions."
+          },
+          {
+            "_id": "L1102",
+            "name": "Promises",
+            "description": "Using promises for async operations."
+          },
+          {
+            "_id": "L1103",
+            "name": "Async/Await",
+            "description": "Modern async programming with async/await."
+          }
+        ]
+      },
+      {
+        "_id": "M403",
+        "name": "DOM Manipulation",
+        "description": "Interacting with the Document Object Model.",
+        "lessons": [
+          {
+            "_id": "L1201",
+            "name": "Selecting Elements",
+            "description": "Using querySelector and getElementById."
+          },
+          {
+            "_id": "L1202",
+            "name": "Event Handling",
+            "description": "Handling user events in JavaScript."
+          },
+          {
+            "_id": "L1203",
+            "name": "Modifying the DOM",
+            "description": "Creating and updating DOM elements."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS3141",
@@ -52,7 +324,75 @@
     "department": "Computer Science",
     "credits": 2,
     "description": "Web Design Fundamentals",
-    "image": "/images/html css.jpeg"
+    "image": "/images/html css.jpeg",
+    "modules": [
+      {
+        "_id": "M501",
+        "name": "HTML Fundamentals",
+        "description": "Basic HTML structure and semantic elements.",
+        "lessons": [
+          {
+            "_id": "L1301",
+            "name": "HTML Structure",
+            "description": "Understanding HTML document structure."
+          },
+          {
+            "_id": "L1302",
+            "name": "Semantic HTML",
+            "description": "Using semantic HTML5 elements."
+          },
+          {
+            "_id": "L1303",
+            "name": "Forms and Input",
+            "description": "Creating forms and handling input."
+          }
+        ]
+      },
+      {
+        "_id": "M502",
+        "name": "CSS Styling",
+        "description": "Styling web pages with CSS.",
+        "lessons": [
+          {
+            "_id": "L1401",
+            "name": "CSS Selectors",
+            "description": "Using different CSS selector types."
+          },
+          {
+            "_id": "L1402",
+            "name": "Box Model",
+            "description": "Understanding the CSS box model."
+          },
+          {
+            "_id": "L1403",
+            "name": "Flexbox and Grid",
+            "description": "Modern CSS layout techniques."
+          }
+        ]
+      },
+      {
+        "_id": "M503",
+        "name": "Responsive Design",
+        "description": "Creating responsive web layouts.",
+        "lessons": [
+          {
+            "_id": "L1501",
+            "name": "Media Queries",
+            "description": "Using media queries for responsive design."
+          },
+          {
+            "_id": "L1502",
+            "name": "Mobile-First Design",
+            "description": "Designing for mobile devices first."
+          },
+          {
+            "_id": "L1503",
+            "name": "CSS Frameworks",
+            "description": "Introduction to Bootstrap and Tailwind."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS4151",
@@ -63,7 +403,75 @@
     "department": "Computer Science",
     "credits": 3,
     "description": "NoSQL Database Essentials",
-    "image": "/images/mongodb.png"
+    "image": "/images/mongodb.png",
+    "modules": [
+      {
+        "_id": "M601",
+        "name": "Introduction to MongoDB",
+        "description": "Getting started with MongoDB NoSQL database.",
+        "lessons": [
+          {
+            "_id": "L1601",
+            "name": "MongoDB Basics",
+            "description": "Understanding MongoDB structure and concepts."
+          },
+          {
+            "_id": "L1602",
+            "name": "CRUD Operations",
+            "description": "Creating, reading, updating, and deleting documents."
+          },
+          {
+            "_id": "L1603",
+            "name": "Data Modeling",
+            "description": "Designing MongoDB schemas."
+          }
+        ]
+      },
+      {
+        "_id": "M602",
+        "name": "MongoDB Queries",
+        "description": "Advanced querying techniques in MongoDB.",
+        "lessons": [
+          {
+            "_id": "L1701",
+            "name": "Query Operators",
+            "description": "Using MongoDB query operators."
+          },
+          {
+            "_id": "L1702",
+            "name": "Aggregation Pipeline",
+            "description": "Processing data with aggregation."
+          },
+          {
+            "_id": "L1703",
+            "name": "Indexing",
+            "description": "Optimizing queries with indexes."
+          }
+        ]
+      },
+      {
+        "_id": "M603",
+        "name": "MongoDB with Node.js",
+        "description": "Integrating MongoDB with Node.js applications.",
+        "lessons": [
+          {
+            "_id": "L1801",
+            "name": "MongoDB Driver",
+            "description": "Using the MongoDB Node.js driver."
+          },
+          {
+            "_id": "L1802",
+            "name": "Mongoose ODM",
+            "description": "Working with Mongoose for data modeling."
+          },
+          {
+            "_id": "L1803",
+            "name": "Best Practices",
+            "description": "MongoDB performance and security best practices."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS5161",
@@ -74,7 +482,75 @@
     "department": "Computer Science",
     "credits": 3,
     "description": "Relational Database Management",
-    "image": "/images/sql.jpeg"
+    "image": "/images/sql.jpeg",
+    "modules": [
+      {
+        "_id": "M701",
+        "name": "SQL Basics",
+        "description": "Introduction to SQL and relational databases.",
+        "lessons": [
+          {
+            "_id": "L1901",
+            "name": "Database Design",
+            "description": "Designing relational database schemas."
+          },
+          {
+            "_id": "L1902",
+            "name": "SQL Syntax",
+            "description": "Learning SQL query syntax."
+          },
+          {
+            "_id": "L1903",
+            "name": "Primary and Foreign Keys",
+            "description": "Understanding database relationships."
+          }
+        ]
+      },
+      {
+        "_id": "M702",
+        "name": "Advanced SQL Queries",
+        "description": "Complex queries and data manipulation.",
+        "lessons": [
+          {
+            "_id": "L2001",
+            "name": "Joins",
+            "description": "Working with different types of joins."
+          },
+          {
+            "_id": "L2002",
+            "name": "Subqueries",
+            "description": "Using nested queries effectively."
+          },
+          {
+            "_id": "L2003",
+            "name": "Aggregate Functions",
+            "description": "Using SUM, COUNT, AVG, and GROUP BY."
+          }
+        ]
+      },
+      {
+        "_id": "M703",
+        "name": "Database Administration",
+        "description": "Managing and optimizing SQL databases.",
+        "lessons": [
+          {
+            "_id": "L2101",
+            "name": "Indexing and Performance",
+            "description": "Optimizing query performance."
+          },
+          {
+            "_id": "L2102",
+            "name": "Transactions",
+            "description": "Managing database transactions."
+          },
+          {
+            "_id": "L2103",
+            "name": "Security and Backup",
+            "description": "Database security and backup strategies."
+          }
+        ]
+      }
+    ]
   },
   {
     "_id": "CS6171",
@@ -85,6 +561,74 @@
     "department": "Computer Science",
     "credits": 4,
     "description": "Backend Development with Node.js",
-    "image": "/images/node.png"
+    "image": "/images/node.png",
+    "modules": [
+      {
+        "_id": "M801",
+        "name": "Node.js Fundamentals",
+        "description": "Introduction to Node.js and server-side JavaScript.",
+        "lessons": [
+          {
+            "_id": "L2201",
+            "name": "Node.js Architecture",
+            "description": "Understanding the Node.js event loop."
+          },
+          {
+            "_id": "L2202",
+            "name": "Modules and NPM",
+            "description": "Working with Node.js modules and packages."
+          },
+          {
+            "_id": "L2203",
+            "name": "File System Operations",
+            "description": "Reading and writing files in Node.js."
+          }
+        ]
+      },
+      {
+        "_id": "M802",
+        "name": "Express.js Framework",
+        "description": "Building web applications with Express.js.",
+        "lessons": [
+          {
+            "_id": "L2301",
+            "name": "Express Basics",
+            "description": "Setting up Express applications."
+          },
+          {
+            "_id": "L2302",
+            "name": "Routing and Middleware",
+            "description": "Handling routes and middleware functions."
+          },
+          {
+            "_id": "L2303",
+            "name": "REST API Development",
+            "description": "Creating RESTful APIs with Express."
+          }
+        ]
+      },
+      {
+        "_id": "M803",
+        "name": "Advanced Node.js",
+        "description": "Advanced topics in Node.js development.",
+        "lessons": [
+          {
+            "_id": "L2401",
+            "name": "Authentication",
+            "description": "Implementing JWT and session-based auth."
+          },
+          {
+            "_id": "L2402",
+            "name": "WebSockets",
+            "description": "Real-time communication with Socket.io."
+          },
+          {
+            "_id": "L2403",
+            "name": "Deployment",
+            "description": "Deploying Node.js applications."
+          }
+        ]
+      }
+    ]
   }
 ]
