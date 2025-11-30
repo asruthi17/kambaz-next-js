@@ -7,16 +7,28 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import * as coursesClient from "../../../client";
 import * as accountClient from "../../../../Account/client";
-import { RootState } from "../../../../store";
+import PeopleDetails from "./Details";
 
-export default function PeopleTable() {
+export default function PeopleTable({ 
+  users: propUsers, 
+  fetchUsers: propFetchUsers 
+}: { 
+  users?: any[]; 
+  fetchUsers?: () => void; 
+} = {}) {
   const { cid } = useParams();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const [users, setUsers] = useState<any[]>([]);
+  const [showDetails, setShowDetails] = useState(false);
+  const [showUserId, setShowUserId] = useState<string | null>(null);
 
   const isFaculty = currentUser?.role === "FACULTY" || currentUser?.role === "INSTRUCTOR";
 
   const fetchUsers = async () => {
+    if (propFetchUsers) {
+      propFetchUsers();
+      return;
+    }
     const users = await coursesClient.findUsersForCourse(cid as string);
     setUsers(users);
   };
@@ -33,11 +45,31 @@ export default function PeopleTable() {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, []);
+    if (propUsers) {
+      setUsers(propUsers);
+    } else {
+      fetchUsers();
+    }
+  }, [propUsers]);
+
+  const displayUsers = propUsers || users;
+
+  // ADD DEBUGGING
+  console.log("showDetails:", showDetails);
+  console.log("showUserId:", showUserId);
 
   return (
     <div id="wd-people-table">
+      {showDetails && (
+        <PeopleDetails
+          uid={showUserId}
+          onClose={() => {
+            console.log("Closing details"); // ADD THIS
+            setShowDetails(false);
+            fetchUsers();
+          }}
+        />
+      )}
       <Table striped bordered hover>
         <thead>
           <tr>
@@ -51,12 +83,21 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {users.map((user: any) => (
+          {displayUsers.map((user: any) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
+                <span
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    console.log("Clicked user:", user._id, user.firstName, user.lastName); // ADD THIS
+                    setShowDetails(true);
+                    setShowUserId(user._id);
+                  }}
+                >
+                  <FaUserCircle className="me-2 fs-1 text-secondary" />
+                  <span className="wd-first-name">{user.firstName}</span>{" "}
+                  <span className="wd-last-name">{user.lastName}</span>
+                </span>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
               <td className="wd-section">{user.section}</td>
