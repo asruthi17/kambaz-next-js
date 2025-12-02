@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCourses } from "../Courses/reducer";
 import * as client from "../Courses/client";
 import { Card, CardBody, CardTitle, CardText, CardImg, Button, Row, Col, FormControl } from "react-bootstrap";
-import { RootState } from "../store";
 
 export default function Dashboard() {
   const { courses } = useSelector((state: any) => state.coursesReducer);
@@ -19,7 +18,7 @@ export default function Dashboard() {
     number: "New Number",
     startDate: "2023-09-10",
     endDate: "2023-12-15",
-    image: "/images/reactjs.jpg",
+    image: "/images/react.png",
     description: "New Description",
   });
 
@@ -40,49 +39,80 @@ export default function Dashboard() {
         } else {
           dispatch(setCourses(myCourses));
         }
+      } else {
+        // Not logged in - show all courses
+        const allCourses = await client.fetchAllCourses();
+        dispatch(setCourses(allCourses));
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching courses:", error);
     }
   };
 
   const onAddNewCourse = async () => {
-    const newCourse = await client.createCourse(course);
-    dispatch(setCourses([...courses, newCourse]));
+    try {
+      const newCourse = await client.createCourse(course);
+      dispatch(setCourses([...courses, newCourse]));
+      setCourse({
+        _id: "0",
+        name: "New Course",
+        number: "New Number",
+        startDate: "2023-09-10",
+        endDate: "2023-12-15",
+        image: "/images/react.png",
+        description: "New Description",
+      });
+    } catch (error) {
+      console.error("Error creating course:", error);
+    }
   };
 
   const onDeleteCourse = async (courseId: string) => {
-    await client.deleteCourse(courseId);
-    dispatch(setCourses(courses.filter((c: any) => c._id !== courseId)));
+    try {
+      await client.deleteCourse(courseId);
+      dispatch(setCourses(courses.filter((c: any) => c._id !== courseId)));
+    } catch (error) {
+      console.error("Error deleting course:", error);
+    }
   };
 
- const onUpdateCourse = async () => {
-  await client.updateCourse(course);
-  dispatch(setCourses(courses.map((c: any) => {
-    if (c._id === course._id) {
-      return course;
-    } else {
-      return c;
+  const onUpdateCourse = async () => {
+    try {
+      await client.updateCourse(course);
+      dispatch(setCourses(courses.map((c: any) => 
+        c._id === course._id ? course : c
+      )));
+    } catch (error) {
+      console.error("Error updating course:", error);
     }
-  })));
-};
+  };
 
   const handleEnroll = async (courseId: string) => {
     if (currentUser) {
-      await client.enrollInCourse(courseId);
-      setEnrolledCourseIds([...enrolledCourseIds, courseId]);
-      if (!showAllCourses) {
-        await fetchCourses();
+      try {
+        await client.enrollInCourse(courseId);
+        setEnrolledCourseIds([...enrolledCourseIds, courseId]);
+        if (!showAllCourses) {
+          await fetchCourses();
+        }
+      } catch (error) {
+        console.error("Enroll error:", error);
+        alert("Failed to enroll in course");
       }
     }
   };
 
   const handleUnenroll = async (courseId: string) => {
     if (currentUser) {
-      await client.unenrollFromCourse(courseId);
-      setEnrolledCourseIds(enrolledCourseIds.filter(id => id !== courseId));
-      if (!showAllCourses) {
-        await fetchCourses();
+      try {
+        await client.unenrollFromCourse(courseId);
+        setEnrolledCourseIds(enrolledCourseIds.filter(id => id !== courseId));
+        if (!showAllCourses) {
+          await fetchCourses();
+        }
+      } catch (error) {
+        console.error("Unenroll error:", error);
+        alert("Failed to unenroll from course");
       }
     }
   };
@@ -92,9 +122,7 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    if (currentUser) {
-      fetchCourses();
-    }
+    fetchCourses();
   }, [currentUser, showAllCourses]);
 
   const safeCourses = courses || [];
@@ -154,7 +182,7 @@ export default function Dashboard() {
             ? "All Courses"
             : showAllCourses
             ? "All Courses"
-            : "My Courses"}{" "}
+            : "Published Courses"}{" "}
           ({safeCourses.length})
         </h2>
         {currentUser && !isFaculty && (
@@ -163,7 +191,7 @@ export default function Dashboard() {
             onClick={() => setShowAllCourses(!showAllCourses)}
             id="wd-enrollments-btn"
           >
-            {showAllCourses ? "Show My Courses" : "Show All Courses"}
+            {showAllCourses ? "Show My Courses" : "Enrollments"}
           </Button>
         )}
       </div>
@@ -171,18 +199,18 @@ export default function Dashboard() {
 
       <div id="wd-dashboard-courses">
         <Row xs={1} sm={2} md={3} lg={4} xl={5} className="g-4">
-          {safeCourses.map((course: any) => {
-            const enrolled = isEnrolled(course._id);
+          {safeCourses.map((c: any) => {
+            const enrolled = isEnrolled(c._id);
 
             return (
-              <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
+              <Col key={c._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                 <Card className="h-100">
                   <Link
                     href={
                       !currentUser
                         ? "#"
                         : enrolled || isFaculty
-                        ? `/Courses/${course._id}/Home`
+                        ? `/Courses/${c._id}/Home`
                         : "#"
                     }
                     className="wd-dashboard-course-link text-decoration-none text-dark"
@@ -196,16 +224,22 @@ export default function Dashboard() {
                       }
                     }}
                   >
-                    <CardImg src={course.image} variant="top" width="100%" height={160} />
+                    <CardImg 
+                      src={c.image} 
+                      variant="top" 
+                      width="100%" 
+                      height={160}
+                      style={{ objectFit: 'cover' }}
+                    />
                     <CardBody>
                       <CardTitle className="wd-dashboard-course-title text-nowrap overflow-hidden">
-                        {course.name}
+                        {c.name}
                       </CardTitle>
                       <CardText
                         className="wd-dashboard-course-description overflow-hidden"
                         style={{ height: "100px" }}
                       >
-                        {course.description}
+                        {c.description}
                       </CardText>
                     </CardBody>
                   </Link>
@@ -218,7 +252,7 @@ export default function Dashboard() {
                         </Button>
                       </Link>
                     ) : (enrolled || isFaculty) ? (
-                      <Link href={`/Courses/${course._id}/Home`} className="text-decoration-none">
+                      <Link href={`/Courses/${c._id}/Home`} className="text-decoration-none">
                         <Button variant="primary" className="w-100 mb-2">
                           Go
                         </Button>
@@ -231,7 +265,7 @@ export default function Dashboard() {
                         className="w-100 mb-2"
                         onClick={(e) => {
                           e.preventDefault();
-                          enrolled ? handleUnenroll(course._id) : handleEnroll(course._id);
+                          enrolled ? handleUnenroll(c._id) : handleEnroll(c._id);
                         }}
                       >
                         {enrolled ? "Unenroll" : "Enroll"}
@@ -244,7 +278,7 @@ export default function Dashboard() {
                           className="btn btn-warning flex-fill"
                           onClick={(event) => {
                             event.preventDefault();
-                            setCourse(course);
+                            setCourse(c);
                           }}
                         >
                           Edit
@@ -252,7 +286,7 @@ export default function Dashboard() {
                         <button
                           onClick={(event) => {
                             event.preventDefault();
-                            onDeleteCourse(course._id);
+                            onDeleteCourse(c._id);
                           }}
                           className="btn btn-danger flex-fill"
                         >
