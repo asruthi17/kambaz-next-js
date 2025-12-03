@@ -26,6 +26,7 @@ export default function Dashboard() {
   const [enrolledCourseIds, setEnrolledCourseIds] = useState<string[]>([]);
 
   const isFaculty = currentUser?.role === "FACULTY";
+  const isAdmin = currentUser?.role === "ADMIN";
 
   const fetchCourses = async () => {
     try {
@@ -33,11 +34,18 @@ export default function Dashboard() {
         const myCourses = await client.findMyCourses();
         setEnrolledCourseIds(myCourses.map((c: any) => c._id));
         
-        if (showAllCourses) {
+        // Admin always sees all courses
+        if (isAdmin) {
           const allCourses = await client.fetchAllCourses();
           dispatch(setCourses(allCourses));
         } else {
-          dispatch(setCourses(myCourses));
+          // Faculty and Students: default = enrolled, button toggles all
+          if (showAllCourses) {
+            const allCourses = await client.fetchAllCourses();
+            dispatch(setCourses(allCourses));
+          } else {
+            dispatch(setCourses(myCourses));
+          }
         }
       } else {
         // Not logged in - show all courses
@@ -79,9 +87,13 @@ export default function Dashboard() {
   const onUpdateCourse = async () => {
     try {
       await client.updateCourse(course);
-      dispatch(setCourses(courses.map((c: any) => 
-        c._id === course._id ? course : c
-      )));
+      dispatch(setCourses(courses.map((c: any) => {
+        if (c._id === course._id) {
+          return course;
+        } else {
+          return c;
+        }
+      })));
     } catch (error) {
       console.error("Error updating course:", error);
     }
@@ -102,27 +114,20 @@ export default function Dashboard() {
     }
   };
 
-  const handleUnenroll = async (courseId: string) => {
-    if (currentUser) {
-      try {
-        await client.unenrollFromCourse(courseId);
-        setEnrolledCourseIds(enrolledCourseIds.filter(id => id !== courseId));
-        if (!showAllCourses) {
-          await fetchCourses();
-        }
-      } catch (error) {
-        console.error("Unenroll error:", error);
-        alert("Failed to unenroll from course");
-      }
-    }
-  };
-
   const isEnrolled = (courseId: string) => {
     return enrolledCourseIds.includes(courseId);
   };
 
   useEffect(() => {
-    fetchCourses();
+    if (currentUser) {
+      fetchCourses();
+    } else {
+      const fetchAllCourses = async () => {
+        const allCourses = await client.fetchAllCourses();
+        dispatch(setCourses(allCourses));
+      };
+      fetchAllCourses();
+    }
   }, [currentUser, showAllCourses]);
 
   const safeCourses = courses || [];
@@ -180,18 +185,20 @@ export default function Dashboard() {
         <h2 id="wd-dashboard-published">
           {!currentUser
             ? "All Courses"
+            : isAdmin
+            ? "All Courses"
             : showAllCourses
             ? "All Courses"
-            : "Published Courses"}{" "}
+            : "My Courses"}{" "}
           ({safeCourses.length})
         </h2>
-        {currentUser && !isFaculty && (
+        {currentUser && !isAdmin && (
           <Button
             variant="primary"
             onClick={() => setShowAllCourses(!showAllCourses)}
             id="wd-enrollments-btn"
           >
-            {showAllCourses ? "Show My Courses" : "Enrollments"}
+            {showAllCourses ? "Show My Courses" : "Show All Courses"}
           </Button>
         )}
       </div>
@@ -209,7 +216,7 @@ export default function Dashboard() {
                     href={
                       !currentUser
                         ? "#"
-                        : enrolled || isFaculty
+                        : isAdmin || enrolled || isFaculty
                         ? `/Courses/${c._id}/Home`
                         : "#"
                     }
@@ -218,7 +225,7 @@ export default function Dashboard() {
                       if (!currentUser) {
                         e.preventDefault();
                         alert("Please sign in to access courses.");
-                      } else if (!enrolled && !isFaculty) {
+                      } else if (!isAdmin && !isFaculty && !enrolled) {
                         e.preventDefault();
                         alert("You must enroll in this course to access it.");
                       }
@@ -226,6 +233,7 @@ export default function Dashboard() {
                   >
                     <CardImg 
                       src={c.image} 
+                      alt={c.name}
                       variant="top" 
                       width="100%" 
                       height={160}
@@ -245,34 +253,64 @@ export default function Dashboard() {
                   </Link>
 
                   <CardBody className="pt-0">
-                    {!currentUser ? (
-                      <Link href="/Account/Signin" className="text-decoration-none">
-                        <Button variant="secondary" className="w-100 mb-2">
-                          Sign in to Enroll
-                        </Button>
-                      </Link>
-                    ) : (enrolled || isFaculty) ? (
+                    {/* Go Button - Show for all logged in users */}
+                    {currentUser && (
                       <Link href={`/Courses/${c._id}/Home`} className="text-decoration-none">
                         <Button variant="primary" className="w-100 mb-2">
                           Go
                         </Button>
                       </Link>
-                    ) : null}
+                    )}
 
-                    {currentUser && !isFaculty && (
+                    {/* Sign in button for non-logged in users */}
+                    {!currentUser && (
+                      <Link href="/Account/Signin" className="text-decoration-none">
+                        <Button variant="secondary" className="w-100 mb-2">
+                          Sign in to Enroll
+                        </Button>
+                      </Link>
+                    )}
+
+                    {/* Enroll Button - Only for students/faculty who aren't enrolled */}
+                    {currentUser && !isAdmin && !enrolled && (
                       <Button
-                        variant={enrolled ? "danger" : "success"}
+                        variant="success"
                         className="w-100 mb-2"
                         onClick={(e) => {
                           e.preventDefault();
-                          enrolled ? handleUnenroll(c._id) : handleEnroll(c._id);
+                          handleEnroll(c._id);
                         }}
                       >
-                        {enrolled ? "Unenroll" : "Enroll"}
+                        Enroll
                       </Button>
                     )}
 
+                    {/* Faculty Controls - Edit/Delete */}
                     {isFaculty && (
+                      <div className="d-flex gap-2">
+                        <button
+                          className="btn btn-warning flex-fill"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            setCourse(c);
+                          }}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={(event) => {
+                            event.preventDefault();
+                            onDeleteCourse(c._id);
+                          }}
+                          className="btn btn-danger flex-fill"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+
+                    {/* Admin Controls - Edit/Delete (no enroll needed) */}
+                    {isAdmin && (
                       <div className="d-flex gap-2">
                         <button
                           className="btn btn-warning flex-fill"
