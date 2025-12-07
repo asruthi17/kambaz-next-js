@@ -49,7 +49,7 @@ body * {
 
 .bg-secondary {
   --bs-secondary-rgb: 230, 230, 230;
-  background-color: #e6e6e6 !important;
+  background-color: hsl(0, 0%, 90%) !important;
 }
 
 html, body {

@@ -34,12 +34,10 @@ export default function Dashboard() {
         const myCourses = await client.findMyCourses();
         setEnrolledCourseIds(myCourses.map((c: any) => c._id));
         
-        // Admin always sees all courses
         if (isAdmin) {
           const allCourses = await client.fetchAllCourses();
           dispatch(setCourses(allCourses));
         } else {
-          // Faculty and Students: default = enrolled, button toggles all
           if (showAllCourses) {
             const allCourses = await client.fetchAllCourses();
             dispatch(setCourses(allCourses));
@@ -48,7 +46,6 @@ export default function Dashboard() {
           }
         }
       } else {
-        // Not logged in - show all courses
         const allCourses = await client.fetchAllCourses();
         dispatch(setCourses(allCourses));
       }

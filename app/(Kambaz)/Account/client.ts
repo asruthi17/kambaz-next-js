@@ -11,7 +11,6 @@ export const findAllUsers = async () => {
   return response.data;
 };
 
-// NEW - Add these three functions
 export const findUserById = async (id: string) => {
   const response = await axiosWithCredentials.get(`${USERS_API}/${id}`);
   return response.data;
@@ -27,7 +26,6 @@ export const findUsersByPartialName = async (name: string) => {
   return response.data;
 };
 
-// Keep all your existing functions
 export const createUser = async (user: any) => {
   const response = await axiosWithCredentials.post(`${USERS_API}`, user);
   return response.data;

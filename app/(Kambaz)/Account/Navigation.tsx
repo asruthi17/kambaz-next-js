@@ -8,10 +8,8 @@ export default function AccountNavigation() {
   const pathname = usePathname();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   
-  // Build links array based on user status
   const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
-  
-  // Add Users link only for ADMIN users
+
   if (currentUser && currentUser.role === "ADMIN") {
     links.push("Users");
   }

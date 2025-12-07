@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { ReactNode, useState, use, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
@@ -22,20 +23,6 @@ export default function CoursesLayout({
   
   const course = courses.find((course: any) => course._id === cid);
   const isCoursePage = pathname.includes("/Courses/");
-
-  // // Check enrollment - redirect if not enrolled and not faculty
-  // useEffect(() => {
-  //   if (currentUser && currentUser.role !== "FACULTY") {
-  //     const isEnrolled = enrollments.some(
-  //       (e: any) => e.user === currentUser._id && e.course === cid
-  //     );
-      
-  //     if (!isEnrolled) {
-  //       alert("You must be enrolled in this course to access it.");
-  //       router.push("/Dashboard");
-  //     }
-  //   }
-  // }, [cid, currentUser, enrollments, router]);
 
   const segments = pathname.split("/");
   const pageName = segments[segments.length - 1] || "Home";

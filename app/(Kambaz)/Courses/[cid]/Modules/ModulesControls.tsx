@@ -19,7 +19,7 @@ export default function ModulesControls({
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => {
-    if (!isFaculty) return; // Don't open dialog for students
+    if (!isFaculty) return; 
     setShow(true);
   };
 

@@ -54,7 +54,6 @@ export default function PeopleTable({
 
   const displayUsers = propUsers || users;
 
-  // ADD DEBUGGING
   console.log("showDetails:", showDetails);
   console.log("showUserId:", showUserId);
 
@@ -64,7 +63,7 @@ export default function PeopleTable({
         <PeopleDetails
           uid={showUserId}
           onClose={() => {
-            console.log("Closing details"); // ADD THIS
+            console.log("Closing details"); 
             setShowDetails(false);
             fetchUsers();
           }}
@@ -89,7 +88,7 @@ export default function PeopleTable({
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => {
-                    console.log("Clicked user:", user._id, user.firstName, user.lastName); // ADD THIS
+                    console.log("Clicked user:", user._id, user.firstName, user.lastName); 
                     setShowDetails(true);
                     setShowUserId(user._id);
                   }}

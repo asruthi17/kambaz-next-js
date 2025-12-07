@@ -8,13 +8,12 @@ const COURSES_API = `${HTTP_SERVER}/api/courses`;
 const USERS_API = `${HTTP_SERVER}/api/users`;
 const ASSIGNMENTS_API = `${HTTP_SERVER}/api/assignments`;
 
-// Users for Course
+
 export const findUsersForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/users`);
   return response.data;
 };
 
-// Enrollments - Simplified to always use "current" user
 export const enrollInCourse = async (courseId: string) => {
   const response = await axiosWithCredentials.post(
     `${USERS_API}/current/courses/${courseId}/enroll`
@@ -29,7 +28,7 @@ export const unenrollFromCourse = async (courseId: string) => {
   return response.data;
 };
 
-// Assignments
+
 export const findAssignmentsForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/assignments`);
   return response.data;
@@ -50,7 +49,7 @@ export const updateAssignment = async (assignment: any) => {
   return data;
 };
 
-// Courses
+
 export const fetchAllCourses = async () => {
   const { data } = await axios.get(COURSES_API);
   return data;
@@ -76,7 +75,7 @@ export const updateCourse = async (course: any) => {
   return data;
 };
 
-// Modules
+
 export const findModulesForCourse = async (courseId: string) => {
   const response = await axios.get(`${COURSES_API}/${courseId}/modules`);
   return response.data;

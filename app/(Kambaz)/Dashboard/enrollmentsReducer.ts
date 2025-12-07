@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice } from "@reduxjs/toolkit";
 import { enrollments } from "../Database";
 
-// Load enrollments from localStorage or fall back to Database
 const loadEnrollments = () => {
   if (typeof window !== "undefined") {
     const saved = localStorage.getItem("enrollments");
@@ -32,7 +32,6 @@ const enrollmentsSlice = createSlice({
       };
       state.enrollments = [...state.enrollments, newEnrollment] as any;
       
-      // Save to localStorage
       if (typeof window !== "undefined") {
         localStorage.setItem("enrollments", JSON.stringify(state.enrollments));
       }
@@ -42,7 +41,6 @@ const enrollmentsSlice = createSlice({
         (e: any) => !(e.user === userId && e.course === courseId)
       );
       
-      // Save to localStorage
       if (typeof window !== "undefined") {
         localStorage.setItem("enrollments", JSON.stringify(state.enrollments));
       }
